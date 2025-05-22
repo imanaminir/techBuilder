@@ -33,27 +33,11 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
     brand = models.CharField(max_length=255)  # یا اگر جدول Brand دارید بعداً ForeignKey کنید
+    price = models.DecimalField(max_digits=12, decimal_places=0)
 
     def __str__(self):
         return self.name
 
-
-class ProductLink(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    link = models.URLField(max_length=255)  # یا models.URLField() اگر واقعی باشد
-
-    def __str__(self):
-        return f"Link for {self.product.name}"
-
-
-class Price(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=12, decimal_places=0)
-    date = models.DateField()
-    source = models.ForeignKey(ProductLink, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.product.name} - {self.price} on {self.date}"
 
 
 class ProductSpec(models.Model):
