@@ -53,11 +53,10 @@ class CompatibilityCheck(models.Model):
     partSpec_1 = models.ForeignKey(PartSpec, on_delete=models.CASCADE, related_name='compat_partspec_1')
     partSpec_2 = models.ForeignKey(PartSpec, on_delete=models.CASCADE, related_name='compat_partspec_2')
 
-
     def __str__(self):
-        return f"{self.part_1.name} ({self.spec_1.name}) vs {self.part_2.name} ({self.spec_2.name})"
+        return f"{self.partSpec_1.part.name} ({self.partSpec_1.spec.name}) vs {self.partSpec_2.part.name} ({self.partSpec_2.spec.name})"
 
-class build(models.Model):
+class Build(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField()
     input= models.JSONField()
