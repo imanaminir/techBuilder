@@ -1,4 +1,4 @@
-from yourapp.models import Product, Part
+from pcBuilder.models import Product, Part
 
 cpu_part, _ = Part.objects.get_or_create(name='CPU')
 
