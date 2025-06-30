@@ -140,7 +140,60 @@ gpus =[
     {"name": "AMD Radeon RX 7600 XT 16GB", "brand": "AMD", "price": 329},
     {"name": "Sapphire Pulse RX 7600 XT", "brand": "Sapphire", "price": 339},
     {"name": "XFX Speedster SWFT210 RX 7600 XT", "brand": "XFX", "price": 319},
-    {"name": "PowerColor Fighter RX 7600 XT", "brand": "PowerColor", "price": 309}
+    {"name": "PowerColor Fighter RX 7600 XT", "brand": "PowerColor", "price": 309},
+
+    {"name": "AMD Radeon RX 7600 8GB", "brand": "AMD", "price": 269},
+    {"name": "ASRock Challenger RX 7600", "brand": "ASRock", "price": 259},
+    {"name": "XFX Speedster SWFT210 RX 7600", "brand": "XFX", "price": 249},
+    {"name": "PowerColor Fighter RX 7600", "brand": "PowerColor", "price": 255},
+    {"name": "Sapphire Pulse RX 7600", "brand": "Sapphire", "price": 265},
+    {"name": "Gigabyte Gaming OC RX 7600", "brand": "Gigabyte", "price": 269},
+    {"name": "MSI Mech 2X RX 7600", "brand": "MSI", "price": 259},
+
+
+
+
+    {"name": "AMD Radeon RX 6950 XT 16GB", "brand": "AMD", "price": 679},
+    {"name": "ASUS ROG Strix RX 6950 XT OC", "brand": "ASUS", "price": 729},
+    {"name": "MSI Gaming X Trio RX 6950 XT", "brand": "MSI", "price": 699},
+
+    {"name": "AMD Radeon RX 6900 XT 16GB", "brand": "AMD", "price": 579},
+    {"name": "PowerColor Red Devil RX 6900 XT", "brand": "PowerColor", "price": 599},
+    {"name": "XFX MERC319 RX 6900 XT", "brand": "XFX", "price": 589},
+
+
+    {"name": "AMD Radeon RX 6800 XT 16GB", "brand": "AMD", "price": 469},
+    {"name": "Sapphire Nitro+ RX 6800 XT", "brand": "Sapphire", "price": 489},
+    {"name": "Gigabyte Gaming OC RX 6800 XT", "brand": "Gigabyte", "price": 479},
+
+    {"name": "AMD Radeon RX 6750 XT 12GB", "brand": "AMD", "price": 419},
+    {"name": "ASUS Dual RX 6750 XT", "brand": "ASUS", "price": 439},
+    {"name": "PowerColor Hellhound RX 6750 XT", "brand": "PowerColor", "price": 429},
+
+    {"name": "AMD Radeon RX 6700 XT 12GB", "brand": "AMD", "price": 359},
+    {"name": "Sapphire Pulse RX 6700 XT", "brand": "Sapphire", "price": 369},
+    {"name": "XFX Speedster QICK RX 6700 XT", "brand": "XFX", "price": 349},
+
+    {"name": "AMD Radeon RX 6650 XT 8GB", "brand": "AMD", "price": 279},
+    {"name": "MSI Mech 2X RX 6650 XT", "brand": "MSI", "price": 289},
+    {"name": "Sapphire Pulse RX 6650 XT", "brand": "Sapphire", "price": 275},
+
+    {"name": "AMD Radeon RX 6600 XT 8GB", "brand": "AMD", "price": 249},
+    {"name": "ASRock Phantom Gaming RX 6600 XT", "brand": "ASRock", "price": 239},
+    {"name": "XFX SWFT 210 RX 6600 XT", "brand": "XFX", "price": 229},
+
+    {"name": "AMD Radeon RX 6600 8GB", "brand": "AMD", "price": 209},
+    {"name": "PowerColor Fighter RX 6600", "brand": "PowerColor", "price": 199},
+    {"name": "Sapphire Pulse RX 6600", "brand": "Sapphire", "price": 205},
+
+
+    {"name": "AMD Radeon RX 6500 XT 4GB", "brand": "AMD", "price": 149},
+    {"name": "ASUS Dual RX 6500 XT", "brand": "ASUS", "price": 159},
+    {"name": "Sapphire Pulse RX 6500 XT", "brand": "Sapphire", "price": 145},
+
+    {"name": "AMD Radeon RX 6400 4GB", "brand": "AMD", "price": 129},
+    {"name": "ASRock Challenger RX 6400", "brand": "ASRock", "price": 119},
+    {"name": "PowerColor RX 6400 ITX", "brand": "PowerColor", "price": 125}
 
 
 
