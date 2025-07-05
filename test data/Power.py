@@ -1,3 +1,14 @@
+import django
+import os
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'techBuilder.settings')
+django.setup()
+
+from pcBuilder.models import Product, Part
+Part.objects.create(name="Power")
+Power_part = Part.objects.get(name="Power")
+
+
 Powers=[
 
 
@@ -25,18 +36,13 @@ Powers=[
     {"name": "Gigabyte P450B 450W", "brand": "Gigabyte", "price": 45},
     {"name": "DeepCool DN500 500W", "brand": "DeepCool", "price": 38}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ]
+
+
+for Power in Powers:
+    Product.objects.create(
+        name=Power["name"],
+        part=Power_part,
+        brand=Power["brand"],
+        price=Power["price"]
+    )

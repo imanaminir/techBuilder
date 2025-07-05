@@ -1,4 +1,15 @@
-gpus =[
+import django
+import os
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'techBuilder.settings')
+django.setup()
+
+from pcBuilder.models import Product, Part
+Part.objects.create(name="GPU")
+GPU_part = Part.objects.get(name="GPU")
+
+
+GPUs =[
     {"name": "NVIDIA GeForce RTX 5090 Founders Edition", "brand": "NVIDIA", "price": 1799},
     {"name": "ASUS ROG STRIX RTX 5090 OC Edition", "brand": "ASUS", "price": 1999},
     {"name": "MSI SUPRIM X RTX 5090 24GB", "brand": "MSI", "price": 1949},
@@ -198,3 +209,10 @@ gpus =[
 
 
 ]
+for GPU in GPUs:
+    Product.objects.create(
+        name=GPU["name"],
+        part=GPU_part,
+        brand=GPU["brand"],
+        price=GPU["price"]
+    )

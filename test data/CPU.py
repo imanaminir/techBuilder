@@ -1,8 +1,14 @@
+import django
+import os
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'techBuilder.settings')
+django.setup()
+
 from pcBuilder.models import Product, Part
+Part.objects.get(name="CPU")
+CPU_part = Part.objects.get(name="CPU")
 
-cpu_part, _ = Part.objects.get_or_create(name='CPU')
-
-cpus = [
+CPUs = [
     # Intel Core i9 Series
     {"name": "Intel Core i9-14900K", "brand": "Intel", "price": 589},
     {"name": "Intel Core i9-13900K", "brand": "Intel", "price": 569},
@@ -23,9 +29,6 @@ cpus = [
     {"name": "Intel Core i5-12600K", "brand": "Intel", "price": 279},
     {"name": "Intel Core i5-11600K", "brand": "Intel", "price": 249},
     {"name": "Intel Core i5-10600K", "brand": "Intel", "price": 229},
-    {"name": "Intel Core i5-12400F", "brand": "Intel", "price": 179},
-    {"name": "Intel Core i5-11400", "brand": "Intel", "price": 169},
-    {"name": "Intel Core i5-10400", "brand": "Intel", "price": 159},
 
     # Intel Core i3 Series
     {"name": "Intel Core i3-13100", "brand": "Intel", "price": 149},
@@ -34,34 +37,25 @@ cpus = [
 
     # AMD Ryzen 9
     {"name": "AMD Ryzen 9 7950X", "brand": "AMD", "price": 699},
-    {"name": "AMD Ryzen 9 7900X", "brand": "AMD", "price": 549},
     {"name": "AMD Ryzen 9 5900X", "brand": "AMD", "price": 549},
     {"name": "AMD Ryzen 9 3950X", "brand": "AMD", "price": 749},
 
     # AMD Ryzen 7
     {"name": "AMD Ryzen 7 7800X3D", "brand": "AMD", "price": 449},
-    {"name": "AMD Ryzen 7 7700X", "brand": "AMD", "price": 399},
     {"name": "AMD Ryzen 7 5800X", "brand": "AMD", "price": 399},
-    {"name": "AMD Ryzen 7 5700X", "brand": "AMD", "price": 329},
     {"name": "AMD Ryzen 7 3800X", "brand": "AMD", "price": 359},
 
     # AMD Ryzen 5
     {"name": "AMD Ryzen 5 7600X", "brand": "AMD", "price": 299},
-    {"name": "AMD Ryzen 5 5600X", "brand": "AMD", "price": 299},
     {"name": "AMD Ryzen 5 5600", "brand": "AMD", "price": 199},
     {"name": "AMD Ryzen 5 3600", "brand": "AMD", "price": 189},
-    {"name": "AMD Ryzen 5 2600", "brand": "AMD", "price": 149},
-
-    # AMD Ryzen 3
-    {"name": "AMD Ryzen 3 4100", "brand": "AMD", "price": 99},
-    {"name": "AMD Ryzen 3 3200G", "brand": "AMD", "price": 79},
 
 ]
 
-for cpu in cpus:
-    Product.objects.get_or_create(
-        name=cpu["name"],
-        part=cpu_part,
-        brand=cpu["brand"],
-        price=cpu["price"]
+for CPU in CPUs:
+    Product.objects.create(
+        name=CPU["name"],
+        part=CPU_part,
+        brand=CPU["brand"],
+        price=CPU["price"]
     )

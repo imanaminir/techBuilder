@@ -1,3 +1,15 @@
+import django
+import os
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'techBuilder.settings')
+django.setup()
+
+from pcBuilder.models import Product, Part
+Part.objects.create(name="MotherBoard")
+motherBoard_part = Part.objects.get(name="MotherBoard")
+
+
+
 motherBoards =[
 
     {"name": "ASUS ROG MAXIMUS Z790 HERO","brand": "ASUS","price" :599},
@@ -20,12 +32,8 @@ motherBoards =[
     {"name": "MSI PRO B760M-A WIFI DDR4","brand": "MSI","price" :145},
     {"name": "MSI MAG B760 TOMAHAWK WIFI","brand": "MSI","price" :215},
     {"name": "MSI MPG B760I EDGE WIFI DDR4","brand": "MSI","price" :189},
-    {"name": "Gigabyte B760M DS3H AX DDR4","brand": "Gigabyte","price" :139},
     {"name": "Gigabyte B760 AORUS ELITE AX","brand": "Gigabyte","price" :199},
-    {"name": "Gigabyte B760M Gaming X AX DDR4","brand": "Gigabyte","price" :159},
-    {"name": "ASRock B760M PRO RS/D4","brand": "ASRock","price" :139},
     {"name": "ASRock B760M Steel Legend WIFI","brand": "ASRock","price" :175},
-    {"name": "ASRock B760M PG Riptide","brand": "ASRock","price" :159},
 
 
     {"name": "ASUS ROG MAXIMUS Z690 HERO","brand": "ASUS","price" :549},
@@ -36,7 +44,6 @@ motherBoards =[
 
 
     {"name": "ASUS PRIME B660M-A WIFI D4","brand": "ASUS","price" :145},
-    {"name": "ASUS TUF Gaming B660M-PLUS WIFI D4","brand": "ASUS","price" :165},
     {"name": "MSI PRO B660M-A WIFI DDR4","brand": "MSI","price" :135},
     {"name": "Gigabyte B660M DS3H AX DDR4","brand": "Gigabyte","price" :129},
     {"name": "ASRock B660M Pro RS","brand": "ASRock","price" :119},
@@ -48,7 +55,6 @@ motherBoards =[
     {"name": "ASRock Z590 Extreme WIFI 6E","brand": "ASRock","price" :239},
 
 
-    {"name": "ASUS TUF Gaming B560M-PLUS WIFI","brand": "ASUS","price" :125},
     {"name": "MSI B560M PRO-VDH WIFI","brand": "MSI","price" :115},
     {"name": "Gigabyte B560M DS3H AC","brand": "Gigabyte","price" :109},
     {"name": "ASRock B560M Steel Legend","brand": "ASRock","price" :119},
@@ -58,8 +64,6 @@ motherBoards =[
     {"name": "ASUS PRIME X670-P WIFI","brand": "ASUS","price" :289},
     {"name": "ASUS TUF Gaming X670E-PLUS WIFI","brand": "ASUS","price" :319},
     {"name": "MSI MEG X670E ACE","brand": "MSI","price" :489},
-    {"name": "MSI PRO X670-P WIFI","brand": "MSI","price" :269},
-    {"name": "MSI MPG X670E CARBON WIFI","brand": "MSI","price" :369},
     {"name": "Gigabyte X670 AORUS ELITE AX","brand": "Gigabyte","price" :309},
     {"name": "Gigabyte X670E AORUS MASTER","brand": "Gigabyte","price" :449},
     {"name": "ASRock X670E Steel Legend","brand": "ASRock","price" :319},
@@ -67,11 +71,9 @@ motherBoards =[
 
 
 
-    {"name": "ASUS TUF Gaming B650-PLUS WIFI","brand": "ASUS","price" :225},
+
     {"name": "ASUS PRIME B650M-A WIFI","brand": "ASUS","price" :189},
-    {"name": "ASUS ROG STRIX B650-A GAMING WIFI","brand": "ASUS","price" :259},
     {"name": "MSI PRO B650M-A WIFI","brand": "MSI","price" :179},
-    {"name": "MSI MPG B650 EDGE WIFI","brand": "MSI","price" :239},
     {"name": "MSI MAG B650 TOMAHAWK WIFI","brand": "MSI","price" :219},
     {"name": "Gigabyte B650 AORUS ELITE AX","brand": "Gigabyte","price" :229},
     {"name": "Gigabyte B650M DS3H AX","brand": "Gigabyte","price" :179},
@@ -91,17 +93,18 @@ motherBoards =[
     {"name": "ASRock X570 Phantom Gaming 4","brand": "ASRock","price" :189},
 
 
-    {"name": "ASUS ROG STRIX B550-F GAMING WIFI II","brand": "ASUS","price" :219},
     {"name": "ASUS PRIME B550M-A WIFI II","brand": "ASUS","price" :179},
-    {"name": "ASUS TUF GAMING B550-PLUS","brand": "ASUS","price" :189},
-    {"name": "MSI MAG B550 TOMAHAWK","brand": "MSI","price" :199},
     {"name": "MSI B550M PRO-VDH WIFI","brand": "MSI","price" :149},
     {"name": "MSI MPG B550 GAMING PLUS","brand": "MSI","price" :179},
-    {"name": "Gigabyte B550 AORUS PRO AC","brand": "Gigabyte","price" :209},
     {"name": "Gigabyte B550M DS3H AC","brand": "Gigabyte","price" :139},
-    {"name": "ASRock B550 Steel Legend","brand": "ASRock","price" :189},
     {"name": "ASRock B550 Phantom Gaming 4","brand": "ASRock","price" :149},
 
 ]
 
-
+for motherBoard in motherBoards:
+    Product.objects.create(
+        name=motherBoard["name"],
+        part=motherBoard_part,
+        brand=motherBoard["brand"],
+        price=motherBoard["price"]
+    )

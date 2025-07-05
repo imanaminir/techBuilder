@@ -1,6 +1,14 @@
+import django
+import os
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'techBuilder.settings')
+django.setup()
 
-RAMS=[
+from pcBuilder.models import Product, Part
+Part.objects.create(name="RAM")
+RAM_part = Part.objects.get(name="RAM")
+
+RAMs=[
     {"name": "Corsair Vengeance DDR5 32GB (2x16GB) 6000MHz CL36", "brand": "Corsair", "price": 349},
     {"name": "Corsair Dominator Platinum RGB DDR5 32GB 6400MHz", "brand": "Corsair", "price": 439},
     {"name": "Corsair Vengeance DDR5 16GB (1x16GB) 5600MHz", "brand": "Corsair", "price": 179},
@@ -42,3 +50,10 @@ RAMS=[
     {"name": "TeamGroup T-Force Delta RGB DDR4 32GB 3600MHz", "brand": "TeamGroup", "price": 169},
     {"name": "TeamGroup Elite DDR4 8GB 2666MHz", "brand": "TeamGroup", "price": 39},
 ]
+for RAM in RAMs:
+    Product.objects.create(
+        name=RAM["name"],
+        part=RAM_part,
+        brand=RAM["brand"],
+        price=RAM["price"]
+    )
