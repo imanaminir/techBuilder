@@ -57,3 +57,39 @@ for RAM in RAMs:
         brand=RAM["brand"],
         price=RAM["price"]
     )
+
+
+ram_specs = [
+    # DDR5 RAM
+    {"name": "Corsair Vengeance DDR5 32GB (2x16GB) 6000MHz CL36", "Gen": "DDR5", "Speed": 6000, "Modules Num": 2, "Capacity": 32},
+    {"name": "Corsair Dominator Platinum RGB DDR5 32GB 6400MHz", "Gen": "DDR5", "Speed": 6400, "Modules Num": 1, "Capacity": 32},
+    {"name": "Corsair Vengeance DDR5 16GB (1x16GB) 5600MHz", "Gen": "DDR5", "Speed": 5600, "Modules Num": 1, "Capacity": 16},
+    {"name": "G.Skill Trident Z5 RGB DDR5 32GB (2x16GB) 6000MHz", "Gen": "DDR5", "Speed": 6000, "Modules Num": 2, "Capacity": 32},
+    {"name": "G.Skill Ripjaws S5 DDR5 32GB 5600MHz CL36", "Gen": "DDR5", "Speed": 5600, "Modules Num": 1, "Capacity": 32},
+    {"name": "G.Skill Trident Z5 RGB DDR5 64GB (2x32GB) 6400MHz", "Gen": "DDR5", "Speed": 6400, "Modules Num": 2, "Capacity": 64},
+    {"name": "Kingston FURY Beast DDR5 32GB (2x16GB) 6000MT/s", "Gen": "DDR5", "Speed": 6000, "Modules Num": 2, "Capacity": 32},
+    {"name": "Kingston FURY Beast RGB DDR5 16GB 5600MT/s", "Gen": "DDR5", "Speed": 5600, "Modules Num": 1, "Capacity": 16},
+    {"name": "Kingston FURY Renegade DDR5 32GB 6400MT/s", "Gen": "DDR5", "Speed": 6400, "Modules Num": 1, "Capacity": 32},
+    {"name": "Crucial DDR5 32GB (2x16GB) 5600MT/s", "Gen": "DDR5", "Speed": 5600, "Modules Num": 2, "Capacity": 32},
+    {"name": "Crucial DDR5 16GB 5200MT/s", "Gen": "DDR5", "Speed": 5200, "Modules Num": 1, "Capacity": 16},
+    {"name": "TeamGroup T-Force Delta RGB DDR5 32GB 6000MHz", "Gen": "DDR5", "Speed": 6000, "Modules Num": 1, "Capacity": 32},
+    {"name": "TeamGroup T-Force Vulcan DDR5 32GB 5600MHz", "Gen": "DDR5", "Speed": 5600, "Modules Num": 1, "Capacity": 32},
+    {"name": "TeamGroup T-Force Delta RGB DDR5 64GB 6400MHz", "Gen": "DDR5", "Speed": 6400, "Modules Num": 1, "Capacity": 64},
+
+    # DDR4 RAM
+    {"name": "Corsair Vengeance LPX DDR4 16GB (2x8GB) 3200MHz", "Gen": "DDR4", "Speed": 3200, "Modules Num": 2, "Capacity": 16},
+    {"name": "Corsair Vengeance RGB Pro DDR4 32GB (2x16GB) 3600MHz", "Gen": "DDR4", "Speed": 3600, "Modules Num": 2, "Capacity": 32},
+    {"name": "Corsair Dominator Platinum DDR4 32GB 3200MHz", "Gen": "DDR4", "Speed": 3200, "Modules Num": 1, "Capacity": 32},
+    {"name": "G.Skill Ripjaws V DDR4 16GB (2x8GB) 3200MHz", "Gen": "DDR4", "Speed": 3200, "Modules Num": 2, "Capacity": 16},
+    {"name": "G.Skill Trident Z RGB DDR4 32GB (2x16GB) 3600MHz", "Gen": "DDR4", "Speed": 3600, "Modules Num": 2, "Capacity": 32},
+    {"name": "G.Skill Aegis DDR4 8GB 3000MHz", "Gen": "DDR4", "Speed": 3000, "Modules Num": 1, "Capacity": 8},
+    {"name": "Kingston HyperX Fury DDR4 16GB (2x8GB) 3200MHz", "Gen": "DDR4", "Speed": 3200, "Modules Num": 2, "Capacity": 16},
+    {"name": "Kingston FURY Beast RGB DDR4 32GB (2x16GB) 3600MHz", "Gen": "DDR4", "Speed": 3600, "Modules Num": 2, "Capacity": 32},
+    {"name": "Kingston HyperX Predator DDR4 64GB 3600MHz", "Gen": "DDR4", "Speed": 3600, "Modules Num": 1, "Capacity": 64},
+    {"name": "Crucial Ballistix DDR4 16GB (2x8GB) 3200MHz", "Gen": "DDR4", "Speed": 3200, "Modules Num": 2, "Capacity": 16},
+    {"name": "Crucial DDR4 8GB 2666MHz", "Gen": "DDR4", "Speed": 2666, "Modules Num": 1, "Capacity": 8},
+    {"name": "Crucial Ballistix RGB DDR4 32GB 3600MHz", "Gen": "DDR4", "Speed": 3600, "Modules Num": 1, "Capacity": 32},
+    {"name": "TeamGroup T-Force Vulcan Z DDR4 16GB (2x8GB) 3200MHz", "Gen": "DDR4", "Speed": 3200, "Modules Num": 2, "Capacity": 16},
+    {"name": "TeamGroup T-Force Delta RGB DDR4 32GB 3600MHz", "Gen": "DDR4", "Speed": 3600, "Modules Num": 1, "Capacity": 32},
+    {"name": "TeamGroup Elite DDR4 8GB 2666MHz", "Gen": "DDR4", "Speed": 2666, "Modules Num": 1, "Capacity": 8}
+]

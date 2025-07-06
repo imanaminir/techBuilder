@@ -108,3 +108,81 @@ for motherBoard in motherBoards:
         brand=motherBoard["brand"],
         price=motherBoard["price"]
     )
+
+
+MB_specs=[
+    # Intel Z790 Motherboards
+    {"name": "ASUS ROG MAXIMUS Z790 HERO", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASUS TUF Gaming Z790-PLUS WIFI D4", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASUS PRIME Z790-P WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI MEG Z790 GODLIKE", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI MPG Z790 CARBON WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI PRO Z790-A WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "Gigabyte Z790 AORUS MASTER", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "Gigabyte Z790 AORUS ELITE AX", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "Gigabyte Z790 UD AC", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASRock Z790 Taichi", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASRock Z790 PG Lightning", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASRock Z790 Steel Legend WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+
+    # Intel B760 Motherboards
+    {"name": "ASUS TUF Gaming B760-PLUS WIFI D4", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASUS PRIME B760M-A WIFI D4", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASUS ROG STRIX B760-F GAMING WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI PRO B760M-A WIFI DDR4", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI MAG B760 TOMAHAWK WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI MPG B760I EDGE WIFI DDR4", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "Gigabyte B760 AORUS ELITE AX", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASRock B760M Steel Legend WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+
+    # Intel Z690 Motherboards
+    {"name": "ASUS ROG MAXIMUS Z690 HERO", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASUS TUF Gaming Z690-PLUS WIFI D4", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI MPG Z690 CARBON WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "Gigabyte Z690 AORUS ELITE AX DDR4", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASRock Z690 Extreme WIFI 6E", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+
+    # Intel B660 Motherboards
+    {"name": "ASUS PRIME B660M-A WIFI D4", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI PRO B660M-A WIFI DDR4", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "Gigabyte B660M DS3H AX DDR4", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASRock B660M Pro RS", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+
+    # AMD X670E/X670 Motherboards
+    {"name": "ASUS ROG CROSSHAIR X670E HERO", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASUS PRIME X670-P WIFI", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASUS TUF Gaming X670E-PLUS WIFI", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI MEG X670E ACE", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "Gigabyte X670 AORUS ELITE AX", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "Gigabyte X670E AORUS MASTER", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASRock X670E Steel Legend", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASRock X670E Pro RS", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+
+    # AMD B650 Motherboards
+    {"name": "ASUS PRIME B650M-A WIFI", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI PRO B650M-A WIFI", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "MSI MAG B650 TOMAHAWK WIFI", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "Gigabyte B650 AORUS ELITE AX", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "Gigabyte B650M DS3H AX", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASRock B650 PG Lightning", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+    {"name": "ASRock B650M Pro RS", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"]},
+
+    # AMD X570 Motherboards
+    {"name": "ASUS ROG CROSSHAIR VIII HERO (WI-FI)", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"]},
+    {"name": "ASUS PRIME X570-PRO", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"]},
+    {"name": "ASUS TUF Gaming X570-PLUS WIFI", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"]},
+    {"name": "MSI MEG X570 ACE", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"]},
+    {"name": "MSI MPG X570 GAMING EDGE WIFI", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"]},
+    {"name": "MSI MAG X570 TOMAHAWK WIFI", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"]},
+    {"name": "Gigabyte X570 AORUS MASTER", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"]},
+    {"name": "Gigabyte X570 AORUS ELITE WIFI", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"]},
+    {"name": "ASRock X570 Steel Legend", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"]},
+    {"name": "ASRock X570 Phantom Gaming 4", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"]},
+
+    # AMD B550 Motherboards
+    {"name": "ASUS PRIME B550M-A WIFI II", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0", "PCIe 3.0"]},
+    {"name": "MSI B550M PRO-VDH WIFI", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0", "PCIe 3.0"]},
+    {"name": "MSI MPG B550 GAMING PLUS", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0", "PCIe 3.0"]},
+    {"name": "Gigabyte B550M DS3H AC", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0", "PCIe 3.0"]},
+    {"name": "ASRock B550 Phantom Gaming 4", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0", "PCIe 3.0"]}
+]
