@@ -61,37 +61,72 @@ for CPU in CPUs:
 
 
 CPUS_spec=[
-    {"name": "Intel Core i9-14900K", "Generation": "Intel 14", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 253, "Multicore Score": 38000},
-    {"name": "Intel Core i9-13900K", "Generation": "Intel 13", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 253, "Multicore Score": 36000},
-    {"name": "Intel Core i9-12900K", "Generation": "Intel 12", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 241, "Multicore Score": 27000},
-    {"name": "Intel Core i9-11900K", "Generation": "Intel 11", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 250, "Multicore Score": 15000},
-    {"name": "Intel Core i9-10900K", "Generation": "Intel 10", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 250, "Multicore Score": 14000},
+        # Intel Core i9 (LGA 1700 for 12th-14th Gen, LGA 1200 for 10th-11th Gen)
+        {"name": "Intel Core i9-14900K", "Generation": "Intel 14", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 253, "Multicore Score": 38000, "Socket": "LGA 1700"},
+        {"name": "Intel Core i9-13900K", "Generation": "Intel 13", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 253, "Multicore Score": 36000, "Socket": "LGA 1700"},
+        {"name": "Intel Core i9-12900K", "Generation": "Intel 12", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 241, "Multicore Score": 27000, "Socket": "LGA 1700"},
+        {"name": "Intel Core i9-11900K", "Generation": "Intel 11", "RAM Generations Supported": ["DDR4"],
+         "TDP (Watts)": 250, "Multicore Score": 15000, "Socket": "LGA 1200"},
+        {"name": "Intel Core i9-10900K", "Generation": "Intel 10", "RAM Generations Supported": ["DDR4"],
+         "TDP (Watts)": 250, "Multicore Score": 14000, "Socket": "LGA 1200"},
 
-    {"name": "Intel Core i7-14700K", "Generation": "Intel 14", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 253, "Multicore Score": 30000},
-    {"name": "Intel Core i7-13700K", "Generation": "Intel 13", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 253, "Multicore Score": 28000},
-    {"name": "Intel Core i7-12700K", "Generation": "Intel 12", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 190, "Multicore Score": 23000},
-    {"name": "Intel Core i7-11700K", "Generation": "Intel 11", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 250, "Multicore Score": 14000},
-    {"name": "Intel Core i7-10700K", "Generation": "Intel 10", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 229, "Multicore Score": 12000},
+        # Intel Core i7
+        {"name": "Intel Core i7-14700K", "Generation": "Intel 14", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 253, "Multicore Score": 30000, "Socket": "LGA 1700"},
+        {"name": "Intel Core i7-13700K", "Generation": "Intel 13", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 253, "Multicore Score": 28000, "Socket": "LGA 1700"},
+        {"name": "Intel Core i7-12700K", "Generation": "Intel 12", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 190, "Multicore Score": 23000, "Socket": "LGA 1700"},
+        {"name": "Intel Core i7-11700K", "Generation": "Intel 11", "RAM Generations Supported": ["DDR4"],
+         "TDP (Watts)": 250, "Multicore Score": 14000, "Socket": "LGA 1200"},
+        {"name": "Intel Core i7-10700K", "Generation": "Intel 10", "RAM Generations Supported": ["DDR4"],
+         "TDP (Watts)": 229, "Multicore Score": 12000, "Socket": "LGA 1200"},
 
-    {"name": "Intel Core i5-14600K", "Generation": "Intel 14", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 181, "Multicore Score": 24000},
-    {"name": "Intel Core i5-13600K", "Generation": "Intel 13", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 181, "Multicore Score": 22000},
-    {"name": "Intel Core i5-12600K", "Generation": "Intel 12", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 150, "Multicore Score": 17000},
-    {"name": "Intel Core i5-11600K", "Generation": "Intel 11", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 182, "Multicore Score": 11000},
-    {"name": "Intel Core i5-10600K", "Generation": "Intel 10", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 182, "Multicore Score": 9500},
+        # Intel Core i5
+        {"name": "Intel Core i5-14600K", "Generation": "Intel 14", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 181, "Multicore Score": 24000, "Socket": "LGA 1700"},
+        {"name": "Intel Core i5-13600K", "Generation": "Intel 13", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 181, "Multicore Score": 22000, "Socket": "LGA 1700"},
+        {"name": "Intel Core i5-12600K", "Generation": "Intel 12", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 150, "Multicore Score": 17000, "Socket": "LGA 1700"},
+        {"name": "Intel Core i5-11600K", "Generation": "Intel 11", "RAM Generations Supported": ["DDR4"],
+         "TDP (Watts)": 182, "Multicore Score": 11000, "Socket": "LGA 1200"},
+        {"name": "Intel Core i5-10600K", "Generation": "Intel 10", "RAM Generations Supported": ["DDR4"],
+         "TDP (Watts)": 182, "Multicore Score": 9500, "Socket": "LGA 1200"},
 
-    {"name": "Intel Core i3-13100", "Generation": "Intel 13", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 60, "Multicore Score": 8000},
-    {"name": "Intel Core i3-12100", "Generation": "Intel 12", "RAM Generations Supported": ["DDR4", "DDR5"], "TDP (Watts)": 60, "Multicore Score": 7500},
-    {"name": "Intel Core i3-10100", "Generation": "Intel 10", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 65, "Multicore Score": 5500},
+        # Intel Core i3
+        {"name": "Intel Core i3-13100", "Generation": "Intel 13", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 60, "Multicore Score": 8000, "Socket": "LGA 1700"},
+        {"name": "Intel Core i3-12100", "Generation": "Intel 12", "RAM Generations Supported": ["DDR4", "DDR5"],
+         "TDP (Watts)": 60, "Multicore Score": 7500, "Socket": "LGA 1700"},
+        {"name": "Intel Core i3-10100", "Generation": "Intel 10", "RAM Generations Supported": ["DDR4"],
+         "TDP (Watts)": 65, "Multicore Score": 5500, "Socket": "LGA 1200"},
 
-    {"name": "AMD Ryzen 9 7950X", "Generation": "AMD 5", "RAM Generations Supported": ["DDR5"], "TDP (Watts)": 230, "Multicore Score": 38000},
-    {"name": "AMD Ryzen 9 5900X", "Generation": "AMD 4", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 142, "Multicore Score": 21000},
-    {"name": "AMD Ryzen 9 3950X", "Generation": "AMD 3", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 142, "Multicore Score": 18000},
+        # AMD Ryzen 9 (AM5 for Ryzen 7000, AM4 for Ryzen 3000/5000)
+        {"name": "AMD Ryzen 9 7950X", "Generation": "AMD 5", "RAM Generations Supported": ["DDR5"], "TDP (Watts)": 230,
+         "Multicore Score": 38000, "Socket": "AM5"},
+        {"name": "AMD Ryzen 9 5900X", "Generation": "AMD 4", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 142,
+         "Multicore Score": 21000, "Socket": "AM4"},
+        {"name": "AMD Ryzen 9 3950X", "Generation": "AMD 3", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 142,
+         "Multicore Score": 18000, "Socket": "AM4"},
 
-    {"name": "AMD Ryzen 7 7800X3D", "Generation": "AMD 5", "RAM Generations Supported": ["DDR5"], "TDP (Watts)": 120, "Multicore Score": 19000},
-    {"name": "AMD Ryzen 7 5800X", "Generation": "AMD 4", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 142, "Multicore Score": 15000},
-    {"name": "AMD Ryzen 7 3800X", "Generation": "AMD 3", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 142, "Multicore Score": 12500},
+        # AMD Ryzen 7
+        {"name": "AMD Ryzen 7 7800X3D", "Generation": "AMD 5", "RAM Generations Supported": ["DDR5"],
+         "TDP (Watts)": 120, "Multicore Score": 19000, "Socket": "AM5"},
+        {"name": "AMD Ryzen 7 5800X", "Generation": "AMD 4", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 142,
+         "Multicore Score": 15000, "Socket": "AM4"},
+        {"name": "AMD Ryzen 7 3800X", "Generation": "AMD 3", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 142,
+         "Multicore Score": 12500, "Socket": "AM4"},
 
-    {"name": "AMD Ryzen 5 7600X", "Generation": "AMD 5", "RAM Generations Supported": ["DDR5"], "TDP (Watts)": 105, "Multicore Score": 15000},
-    {"name": "AMD Ryzen 5 5600", "Generation": "AMD 4", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 88, "Multicore Score": 11000},
-    {"name": "AMD Ryzen 5 3600", "Generation": "AMD 3", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 88, "Multicore Score": 9000}
+        # AMD Ryzen 5
+        {"name": "AMD Ryzen 5 7600X", "Generation": "AMD 5", "RAM Generations Supported": ["DDR5"], "TDP (Watts)": 105,
+         "Multicore Score": 15000, "Socket": "AM5"},
+        {"name": "AMD Ryzen 5 5600", "Generation": "AMD 4", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 88,
+         "Multicore Score": 11000, "Socket": "AM4"},
+        {"name": "AMD Ryzen 5 3600", "Generation": "AMD 3", "RAM Generations Supported": ["DDR4"], "TDP (Watts)": 88,
+         "Multicore Score": 9000, "Socket": "AM4"}
+
 ]
