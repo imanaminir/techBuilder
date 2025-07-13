@@ -5,7 +5,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'techBuilder.settings')
 django.setup()
 
 from pcBuilder.models import Product, Part , PartSpec,ProductSpec
-#Part.objects.create(name="CPU")
+Part.objects.get_or_create(name="CPU")
 CPU_part = Part.objects.get(name="CPU")
 
 CPUs = [
@@ -144,10 +144,10 @@ Socket=PartSpec.objects.get(name="Socket",part=CPU_part)
 
 for product in CPUS_spec:
     THEproduct=Product.objects.get(name=product["name"])
-    ProductSpec.objects.create(product=THEproduct,part_spec=GEN,value=product["GEN"])
-    ProductSpec.objects.create(product=THEproduct, part_spec=RAM_GENs, value=product["RAM_GENs"])
-    ProductSpec.objects.create(product=THEproduct, part_spec=TDP, value=product["TDP"])
-    ProductSpec.objects.create(product=THEproduct, part_spec=Multicore, value=product["Multicore"])
-    ProductSpec.objects.create(product=THEproduct,part_spec=Socket,value=product["Socket"])
+    ProductSpec.objects.get_or_create(product=THEproduct,part_spec=GEN,value=product["GEN"])
+    ProductSpec.objects.get_or_create(product=THEproduct, part_spec=RAM_GENs, value=product["RAM_GENs"])
+    ProductSpec.objects.get_or_create(product=THEproduct, part_spec=TDP, value=product["TDP"])
+    ProductSpec.objects.get_or_create(product=THEproduct, part_spec=Multicore, value=product["Multicore"])
+    ProductSpec.objects.get_or_create(product=THEproduct,part_spec=Socket,value=product["Socket"])
 
 

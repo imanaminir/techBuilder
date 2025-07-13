@@ -4,8 +4,8 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'techBuilder.settings')
 django.setup()
 
-from pcBuilder.models import Product, Part
-Part.objects.create(name="Power")
+from pcBuilder.models import Product, Part, PartSpec,ProductSpec
+Part.objects.get_or_create(name="Power")
 Power_part = Part.objects.get(name="Power")
 
 
@@ -40,96 +40,116 @@ Powers=[
 
 
 for Power in Powers:
-    Product.objects.create(
+    Product.objects.get_create(
         name=Power["name"],
         part=Power_part,
         brand=Power["brand"],
         price=Power["price"]
     )
 
-psu_list = [{'name': 'Corsair HX1200 1200W 80+ Platinum', 'Power (W)': 1200, 'Modularity': 'Fully Modular',
-        'Efficiency Rating': '80+ Platinum',
+psu_list = [{'name': 'Corsair HX1200 1200W 80+ Platinum', 'Power': 1200, 'Modularity': 'Fully Modular',
+        'Efficiency_Rating': '80+ Platinum',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe',
                        '8-pin PCIe', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA',
                        'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex', 'Molex', 'Molex', 'Molex', 'Molex']},
-       {'name': 'ASUS ROG Thor 1200W 80+ Platinum II', 'Power (W)': 1200, 'Modularity': 'Fully Modular',
-        'Efficiency Rating': '80+ Platinum',
+       {'name': 'ASUS ROG Thor 1200W 80+ Platinum II', 'Power': 1200, 'Modularity': 'Fully Modular',
+        'Efficiency_Rating': '80+ Platinum',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe',
                        '8-pin PCIe', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA',
                        'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex', 'Molex', 'Molex', 'Molex', 'Molex', 'USB-C',
                        '16-pin (12VHPWR)']},
-       {'name': 'Seasonic PRIME TX-1000 80+ Titanium', 'Power (W)': 1000, 'Modularity': 'Fully Modular',
-        'Efficiency Rating': '80+ Titanium',
+       {'name': 'Seasonic PRIME TX-1000 80+ Titanium', 'Power': 1000, 'Modularity': 'Fully Modular',
+        'Efficiency_Rating': '80+ Titanium',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe',
                        '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA',
                        'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex',
                        'Molex', 'Molex', 'Molex', 'Molex', 'Molex', '16-pin (12VHPWR)']},
-       {'name': 'Cooler Master V1300 Platinum', 'Power (W)': 1300, 'Modularity': 'Fully Modular',
-        'Efficiency Rating': '80+ Platinum',
+       {'name': 'Cooler Master V1300 Platinum', 'Power': 1300, 'Modularity': 'Fully Modular',
+        'Efficiency_Rating': '80+ Platinum',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe',
                        '8-pin PCIe', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA',
                        'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex', 'Molex', 'Molex', 'Molex', 'Molex',
                        '16-pin (12VHPWR)']},
-       {'name': 'Thermaltake Toughpower PF1 ARGB 1200W', 'Power (W)': 1200, 'Modularity': 'Fully Modular',
-        'Efficiency Rating': '80+ Platinum',
+       {'name': 'Thermaltake Toughpower PF1 ARGB 1200W', 'Power': 1200, 'Modularity': 'Fully Modular',
+        'Efficiency_Rating': '80+ Platinum',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe',
                        '8-pin PCIe', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA',
                        'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex', 'Molex', 'Molex', 'Molex', 'Molex',
                        'ARGB Header', '16-pin (12VHPWR)']},
-       {'name': 'Corsair RM850x 850W 80+ Gold Fully Modular', 'Power (W)': 850, 'Modularity': 'Fully Modular',
-        'Efficiency Rating': '80+ Gold',
+       {'name': 'Corsair RM850x 850W 80+ Gold Fully Modular', 'Power': 850, 'Modularity': 'Fully Modular',
+        'Efficiency_Rating': '80+ Gold',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe',
                        'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex', 'Molex',
                        'Molex']},
-       {'name': 'Seasonic FOCUS GX-850 850W 80+ Gold', 'Power (W)': 850, 'Modularity': 'Fully Modular',
-        'Efficiency Rating': '80+ Gold',
+       {'name': 'Seasonic FOCUS GX-850 850W 80+ Gold', 'Power': 850, 'Modularity': 'Fully Modular',
+        'Efficiency_Rating': '80+ Gold',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe',
                        'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex', 'Molex',
                        'Molex']},
-       {'name': 'ASUS ROG Thor 850W 80+ Platinum', 'Power (W)': 850, 'Modularity': 'Fully Modular',
-        'Efficiency Rating': '80+ Platinum',
+       {'name': 'ASUS ROG Thor 850W 80+ Platinum', 'Power': 850, 'Modularity': 'Fully Modular',
+        'Efficiency_Rating': '80+ Platinum',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe',
                        'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex', 'Molex',
                        'Molex', 'OLED Display', '16-pin (12VHPWR)']},
-       {'name': 'Cooler Master V850 Gold V2', 'Power (W)': 850, 'Modularity': 'Fully Modular',
-        'Efficiency Rating': '80+ Gold',
+       {'name': 'Cooler Master V850 Gold V2', 'Power': 850, 'Modularity': 'Fully Modular',
+        'Efficiency_Rating': '80+ Gold',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe',
                        'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex', 'Molex',
                        'Molex', '16-pin (12VHPWR)']},
-       {'name': 'Thermaltake Toughpower GF1 850W', 'Power (W)': 850, 'Modularity': 'Fully Modular',
-        'Efficiency Rating': '80+ Gold',
+       {'name': 'Thermaltake Toughpower GF1 850W', 'Power': 850, 'Modularity': 'Fully Modular',
+        'Efficiency_Rating': '80+ Gold',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe', '8-pin PCIe',
                        'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex', 'Molex',
                        'Molex']},
-       {'name': 'Corsair CX650M 650W 80+ Bronze Semi-Modular', 'Power (W)': 650, 'Modularity': 'Semi-Modular',
-        'Efficiency Rating': '80+ Bronze',
+       {'name': 'Corsair CX650M 650W 80+ Bronze Semi-Modular', 'Power': 650, 'Modularity': 'Semi-Modular',
+        'Efficiency_Rating': '80+ Bronze',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA',
                        'SATA', 'Molex', 'Molex', 'Molex']},
-       {'name': 'Cooler Master MWE Bronze V2 650W', 'Power (W)': 650, 'Modularity': 'Non-Modular',
-        'Efficiency Rating': '80+ Bronze',
+       {'name': 'Cooler Master MWE Bronze V2 650W', 'Power': 650, 'Modularity': 'Non-Modular',
+        'Efficiency_Rating': '80+ Bronze',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA',
                        'SATA', 'Molex', 'Molex', 'Molex']},
-       {'name': 'EVGA 600 BR 600W 80+ Bronze', 'Power (W)': 600, 'Modularity': 'Non-Modular',
-        'Efficiency Rating': '80+ Bronze',
+       {'name': 'EVGA 600 BR 600W 80+ Bronze', 'Power': 600, 'Modularity': 'Non-Modular',
+        'Efficiency_Rating': '80+ Bronze',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA',
                        'SATA', 'Molex', 'Molex', 'Molex']},
-       {'name': 'Thermaltake Smart BX1 650W', 'Power (W)': 650, 'Modularity': 'Non-Modular',
-        'Efficiency Rating': '80+ Bronze',
+       {'name': 'Thermaltake Smart BX1 650W', 'Power': 650, 'Modularity': 'Non-Modular',
+        'Efficiency_Rating': '80+ Bronze',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA',
                        'SATA', 'Molex', 'Molex', 'Molex']},
-       {'name': 'ASUS TUF Gaming 650B 650W', 'Power (W)': 650, 'Modularity': 'Non-Modular',
-        'Efficiency Rating': '80+ Bronze',
+       {'name': 'ASUS TUF Gaming 650B 650W', 'Power': 650, 'Modularity': 'Non-Modular',
+        'Efficiency_Rating': '80+ Bronze',
         'Connectors': ['24-pin ATX', '8-pin EPS', '8-pin PCIe', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'SATA',
                        'SATA', 'Molex', 'Molex', 'Molex']},
-       {'name': 'Cooler Master Elite V3 500W', 'Power (W)': 500, 'Modularity': 'Non-Modular',
-        'Efficiency Rating': '80+',
+       {'name': 'Cooler Master Elite V3 500W', 'Power': 500, 'Modularity': 'Non-Modular',
+        'Efficiency_Rating': '80+',
         'Connectors': ['24-pin ATX', '4+4-pin EPS', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex']},
-       {'name': 'Thermaltake Smart Series 500W', 'Power (W)': 500, 'Modularity': 'Non-Modular',
-        'Efficiency Rating': '80+',
+       {'name': 'Thermaltake Smart Series 500W', 'Power': 500, 'Modularity': 'Non-Modular',
+        'Efficiency_Rating': '80+',
         'Connectors': ['24-pin ATX', '4+4-pin EPS', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex']},
-       {'name': 'Corsair CV550 550W', 'Power (W)': 550, 'Modularity': 'Non-Modular', 'Efficiency Rating': '80+ Bronze',
+       {'name': 'Corsair CV550 550W', 'Power': 550, 'Modularity': 'Non-Modular', 'Efficiency_Rating': '80+ Bronze',
         'Connectors': ['24-pin ATX', '4+4-pin EPS', '8-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex']},
-       {'name': 'Gigabyte P450B 450W', 'Power (W)': 450, 'Modularity': 'Non-Modular', 'Efficiency Rating': '80+ Bronze',
+       {'name': 'Gigabyte P450B 450W', 'Power': 450, 'Modularity': 'Non-Modular', 'Efficiency_Rating': '80+ Bronze',
         'Connectors': ['24-pin ATX', '4+4-pin EPS', '6+2-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex']},
-       {'name': 'DeepCool DN500 500W', 'Power (W)': 500, 'Modularity': 'Non-Modular', 'Efficiency Rating': '80+',
+       {'name': 'DeepCool DN500 500W', 'Power': 500, 'Modularity': 'Non-Modular', 'Efficiency_Rating': '80+',
         'Connectors': ['24-pin ATX', '4+4-pin EPS', '6+2-pin PCIe', 'SATA', 'SATA', 'SATA', 'SATA', 'Molex', 'Molex']}]
+
+
+PartSpec.objects.get_or_create(name="Power",part=Power_part)
+PartSpec.objects.get_or_create(name="Modularity",part=Power_part)
+PartSpec.objects.get_or_create(name="Efficiency_Rating",part=Power_part)
+PartSpec.objects.get_or_create(name="Connectors",part=Power_part)
+
+
+Power=PartSpec.objects.get(name="Power",part=Power_part)
+Modularity=PartSpec.objects.get(name="Modularity",part=Power_part)
+Efficiency_Rating=PartSpec.objects.get(name="Efficiency_Rating",part=Power_part)
+Connectors=PartSpec.objects.get(name="Connectors",part=Power_part)
+
+
+for product in psu_list:
+    THEproduct=Product.objects.get(name=product["name"])
+    ProductSpec.objects.get_or_create(product=THEproduct,part_spec=Power,value=product["Power"])
+    ProductSpec.objects.get_or_create(product=THEproduct, part_spec=Modularity, value=product["Modularity"])
+    ProductSpec.objects.get_or_create(product=THEproduct, part_spec=Efficiency_Rating, value=product["Efficiency_Rating"])
+    ProductSpec.objects.get_or_create(product=THEproduct, part_spec=Connectors, value=product["Connectors"])

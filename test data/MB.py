@@ -4,8 +4,8 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'techBuilder.settings')
 django.setup()
 
-from pcBuilder.models import Product, Part
-Part.objects.create(name="MotherBoard")
+from pcBuilder.models import Product, Part, PartSpec,ProductSpec
+Part.objects.get_or_create(name="MotherBoard")
 motherBoard_part = Part.objects.get(name="MotherBoard")
 
 
@@ -102,7 +102,7 @@ motherBoards =[
 ]
 
 for motherBoard in motherBoards:
-    Product.objects.create(
+    Product.objects.get_or_create(
         name=motherBoard["name"],
         part=motherBoard_part,
         brand=motherBoard["brand"],
@@ -112,77 +112,121 @@ for motherBoard in motherBoards:
 
 MB_specs=[
     # Intel Z790 Motherboards
-    {"name": "ASUS ROG MAXIMUS Z790 HERO", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
-    {"name": "ASUS TUF Gaming Z790-PLUS WIFI D4", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASUS PRIME Z790-P WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI MEG Z790 GODLIKE", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS", "6-pin PCIe"]},
-    {"name": "MSI MPG Z790 CARBON WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
-    {"name": "MSI PRO Z790-A WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "Gigabyte Z790 AORUS MASTER", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
-    {"name": "Gigabyte Z790 AORUS ELITE AX", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "Gigabyte Z790 UD AC", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASRock Z790 Taichi", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
-    {"name": "ASRock Z790 PG Lightning", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASRock Z790 Steel Legend WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASUS ROG MAXIMUS Z790 HERO", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
+    {"name": "ASUS TUF Gaming Z790-PLUS WIFI D4", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASUS PRIME Z790-P WIFI", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI MEG Z790 GODLIKE", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS", "6-pin PCIe"]},
+    {"name": "MSI MPG Z790 CARBON WIFI", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
+    {"name": "MSI PRO Z790-A WIFI", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "Gigabyte Z790 AORUS MASTER", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
+    {"name": "Gigabyte Z790 AORUS ELITE AX", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "Gigabyte Z790 UD AC", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASRock Z790 Taichi", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
+    {"name": "ASRock Z790 PG Lightning", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASRock Z790 Steel Legend WIFI", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
 
     # Intel B760 Motherboards
-    {"name": "ASUS TUF Gaming B760-PLUS WIFI D4", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASUS PRIME B760M-A WIFI D4", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASUS ROG STRIX B760-F GAMING WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI PRO B760M-A WIFI DDR4", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI MAG B760 TOMAHAWK WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI MPG B760I EDGE WIFI DDR4", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "Gigabyte B760 AORUS ELITE AX", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASRock B760M Steel Legend WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASUS TUF Gaming B760-PLUS WIFI D4", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASUS PRIME B760M-A WIFI D4", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASUS ROG STRIX B760-F GAMING WIFI", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI PRO B760M-A WIFI DDR4", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI MAG B760 TOMAHAWK WIFI", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI MPG B760I EDGE WIFI DDR4", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "Gigabyte B760 AORUS ELITE AX", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASRock B760M Steel Legend WIFI", "CPU_GENs_Supported": ["Intel 12", "Intel 13", "Intel 14"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
 
     # Intel Z690 Motherboards
-    {"name": "ASUS ROG MAXIMUS Z690 HERO", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
-    {"name": "ASUS TUF Gaming Z690-PLUS WIFI D4", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI MPG Z690 CARBON WIFI", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
-    {"name": "Gigabyte Z690 AORUS ELITE AX DDR4", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASRock Z690 Extreme WIFI 6E", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASUS ROG MAXIMUS Z690 HERO", "CPU_GENs_Supported": ["Intel 12", "Intel 13"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
+    {"name": "ASUS TUF Gaming Z690-PLUS WIFI D4", "CPU_GENs_Supported": ["Intel 12", "Intel 13"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI MPG Z690 CARBON WIFI", "CPU_GENs_Supported": ["Intel 12", "Intel 13"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
+    {"name": "Gigabyte Z690 AORUS ELITE AX DDR4", "CPU_GENs_Supported": ["Intel 12", "Intel 13"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASRock Z690 Extreme WIFI 6E", "CPU_GENs_Supported": ["Intel 12", "Intel 13"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
 
     # Intel B660 Motherboards
-    {"name": "ASUS PRIME B660M-A WIFI D4", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI PRO B660M-A WIFI DDR4", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "Gigabyte B660M DS3H AX DDR4", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASRock B660M Pro RS", "CPU Generations Supported": ["Intel 12", "Intel 13"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASUS PRIME B660M-A WIFI D4", "CPU_GENs_Supported": ["Intel 12", "Intel 13"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI PRO B660M-A WIFI DDR4", "CPU_GENs_Supported": ["Intel 12", "Intel 13"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "Gigabyte B660M DS3H AX DDR4", "CPU_GENs_Supported": ["Intel 12", "Intel 13"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASRock B660M Pro RS", "CPU_GENs_Supported": ["Intel 12", "Intel 13"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
 
     # AMD X670E/X670 Motherboards
-    {"name": "ASUS ROG CROSSHAIR X670E HERO", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
-    {"name": "ASUS PRIME X670-P WIFI", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
-    {"name": "ASUS TUF Gaming X670E-PLUS WIFI", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
-    {"name": "MSI MEG X670E ACE", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
-    {"name": "Gigabyte X670 AORUS ELITE AX", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
-    {"name": "Gigabyte X670E AORUS MASTER", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
-    {"name": "ASRock X670E Steel Legend", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
-    {"name": "ASRock X670E Pro RS", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
+    {"name": "ASUS ROG CROSSHAIR X670E HERO", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
+    {"name": "ASUS PRIME X670-P WIFI", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
+    {"name": "ASUS TUF Gaming X670E-PLUS WIFI", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
+    {"name": "MSI MEG X670E ACE", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
+    {"name": "Gigabyte X670 AORUS ELITE AX", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
+    {"name": "Gigabyte X670E AORUS MASTER", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
+    {"name": "ASRock X670E Steel Legend", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "8-pin EPS"]},
+    {"name": "ASRock X670E Pro RS", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
 
     # AMD B650 Motherboards
-    {"name": "ASUS PRIME B650M-A WIFI", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI PRO B650M-A WIFI", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI MAG B650 TOMAHAWK WIFI", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "Gigabyte B650 AORUS ELITE AX", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "Gigabyte B650M DS3H AX", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASRock B650 PG Lightning", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASRock B650M Pro RS", "CPU Generations Supported": ["AMD 5"], "RAM Generations Supported": ["DDR5"], "PCIe Slots Gen": ["PCIe 5.0", "PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASUS PRIME B650M-A WIFI", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI PRO B650M-A WIFI", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI MAG B650 TOMAHAWK WIFI", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "Gigabyte B650 AORUS ELITE AX", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "Gigabyte B650M DS3H AX", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASRock B650 PG Lightning", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASRock B650M Pro RS", "CPU_GENs_Supported": ["AMD 5"], "RAM_GEN_Supported": ["DDR5"], "PCIe_GENs": ["PCIe 5.0", "PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
 
     # AMD X570 Motherboards
-    {"name": "ASUS ROG CROSSHAIR VIII HERO (WI-FI)", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
-    {"name": "ASUS PRIME X570-PRO", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASUS TUF Gaming X570-PLUS WIFI", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI MEG X570 ACE", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
-    {"name": "MSI MPG X570 GAMING EDGE WIFI", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI MAG X570 TOMAHAWK WIFI", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "Gigabyte X570 AORUS MASTER", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
-    {"name": "Gigabyte X570 AORUS ELITE WIFI", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASRock X570 Steel Legend", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASRock X570 Phantom Gaming 4", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASUS ROG CROSSHAIR VIII HERO (WI-FI)", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
+    {"name": "ASUS PRIME X570-PRO", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASUS TUF Gaming X570-PLUS WIFI", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI MEG X570 ACE", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
+    {"name": "MSI MPG X570 GAMING EDGE WIFI", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI MAG X570 TOMAHAWK WIFI", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "Gigabyte X570 AORUS MASTER", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS", "4-pin EPS"]},
+    {"name": "Gigabyte X570 AORUS ELITE WIFI", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASRock X570 Steel Legend", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASRock X570 Phantom Gaming 4", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
 
     # AMD B550 Motherboards
-    {"name": "ASUS PRIME B550M-A WIFI II", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0", "PCIe 3.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI B550M PRO-VDH WIFI", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0", "PCIe 3.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "MSI MPG B550 GAMING PLUS", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0", "PCIe 3.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "Gigabyte B550M DS3H AC", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0", "PCIe 3.0"], "power connector": ["24-pin ATX", "8-pin EPS"]},
-    {"name": "ASRock B550 Phantom Gaming 4", "CPU Generations Supported": ["AMD 3", "AMD 4"], "RAM Generations Supported": ["DDR4"], "PCIe Slots Gen": ["PCIe 4.0", "PCIe 3.0"], "power connector": ["24-pin ATX", "8-pin EPS"]}
+    {"name": "ASUS PRIME B550M-A WIFI II", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0", "PCIe 3.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI B550M PRO-VDH WIFI", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0", "PCIe 3.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "MSI MPG B550 GAMING PLUS", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0", "PCIe 3.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "Gigabyte B550M DS3H AC", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0", "PCIe 3.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]},
+    {"name": "ASRock B550 Phantom Gaming 4", "CPU_GENs_Supported": ["AMD 3", "AMD 4"], "RAM_GEN_Supported": ["DDR4"], "PCIe_GENs": ["PCIe 4.0", "PCIe 3.0"], "Power_Connector": ["24-pin ATX", "8-pin EPS"]}
 ]
+
+
+
+PartSpec.objects.get_or_create(name="CPU_GENs_Supported",part=motherBoard_part)
+PartSpec.objects.get_or_create(name="RAM_GEN_Supported",part=motherBoard_part)
+PartSpec.objects.get_or_create(name="PCIe_GENs",part=motherBoard_part)
+PartSpec.objects.get_or_create(name="Power_Connector",part=motherBoard_part)
+
+
+CPU_GENs_Supported=PartSpec.objects.get(name="CPU_GENs_Supported",part=motherBoard_part)
+RAM_GEN_Supported=PartSpec.objects.get(name="RAM_GEN_Supported",part=motherBoard_part)
+PCIe_GEN=PartSpec.objects.get(name="PCIe_GENs",part=motherBoard_part)
+Power_Connector=PartSpec.objects.get(name="Power_Connector",part=motherBoard_part)
+
+
+for product in MB_specs:
+    THEproduct=Product.objects.get(name=product["name"])
+    ProductSpec.objects.get_or_create(product=THEproduct,part_spec=CPU_GENs_Supported,value=product["CPU_GENs_Supported"])
+    ProductSpec.objects.get_or_create(product=THEproduct, part_spec=RAM_GEN_Supported, value=product["RAM_GEN_Supported"])
+    ProductSpec.objects.get_or_create(product=THEproduct, part_spec=PCIe_GEN, value=product["PCIe_GENs"])
+    ProductSpec.objects.get_or_create(product=THEproduct, part_spec=Power_Connector, value=product["Power_Connector"])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
