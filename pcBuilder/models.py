@@ -31,7 +31,7 @@ class Product(models.Model):
 class ProductSpec(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     part_spec = models.ForeignKey(PartSpec, on_delete=models.CASCADE)
-    value = models.TextField()
+    value = models.JSONField()
 
     def __str__(self):
         return f"{self.product.name} - {self.part_spec.spec.name}: {self.value}"
