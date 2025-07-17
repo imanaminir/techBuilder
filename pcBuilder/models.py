@@ -34,7 +34,7 @@ class ProductSpec(models.Model):
     value = models.JSONField()
 
     def __str__(self):
-        return f"{self.product.name} - {self.part_spec.spec.name}: {self.value}"
+        return f"{self.product.name} - {self.part_spec.name}: {self.value}"
 
 
 class CompatibilityCheck(models.Model):
