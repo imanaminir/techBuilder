@@ -61,49 +61,49 @@ for CPU in CPUs:
 
 
 CPUS_spec=[
-        # Intel Core i9 (LGA 1700 for 12th-14th Gen, LGA 1200 for 10th-11th Gen)
+        # Intel Core i9 (LGA1700 for 12th-14th Gen, LGA1200 for 10th-11th Gen)
         {"name": "Intel Core i9-14900K", "GEN": "Intel 14", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 253, "Multicore": 38000, "Socket": "LGA 1700"},
+         "TDP": 253, "Multicore": 38000, "Socket": "LGA1700"},
         {"name": "Intel Core i9-13900K", "GEN": "Intel 13", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 253, "Multicore": 36000, "Socket": "LGA 1700"},
+         "TDP": 253, "Multicore": 36000, "Socket": "LGA1700"},
         {"name": "Intel Core i9-12900K", "GEN": "Intel 12", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 241, "Multicore": 27000, "Socket": "LGA 1700"},
+         "TDP": 241, "Multicore": 27000, "Socket": "LGA1700"},
         {"name": "Intel Core i9-11900K", "GEN": "Intel 11", "RAM_GENs": ["DDR4"],
-         "TDP": 250, "Multicore": 15000, "Socket": "LGA 1200"},
+         "TDP": 250, "Multicore": 15000, "Socket": "LGA1200"},
         {"name": "Intel Core i9-10900K", "GEN": "Intel 10", "RAM_GENs": ["DDR4"],
-         "TDP": 250, "Multicore": 14000, "Socket": "LGA 1200"},
+         "TDP": 250, "Multicore": 14000, "Socket": "LGA1200"},
 
         # Intel Core i7
         {"name": "Intel Core i7-14700K", "GEN": "Intel 14", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 253, "Multicore": 30000, "Socket": "LGA 1700"},
+         "TDP": 253, "Multicore": 30000, "Socket": "LGA1700"},
         {"name": "Intel Core i7-13700K", "GEN": "Intel 13", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 253, "Multicore": 28000, "Socket": "LGA 1700"},
+         "TDP": 253, "Multicore": 28000, "Socket": "LGA1700"},
         {"name": "Intel Core i7-12700K", "GEN": "Intel 12", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 190, "Multicore": 23000, "Socket": "LGA 1700"},
+         "TDP": 190, "Multicore": 23000, "Socket": "LGA1700"},
         {"name": "Intel Core i7-11700K", "GEN": "Intel 11", "RAM_GENs": ["DDR4"],
-         "TDP": 250, "Multicore": 14000, "Socket": "LGA 1200"},
+         "TDP": 250, "Multicore": 14000, "Socket": "LGA1200"},
         {"name": "Intel Core i7-10700K", "GEN": "Intel 10", "RAM_GENs": ["DDR4"],
-         "TDP": 229, "Multicore": 12000, "Socket": "LGA 1200"},
+         "TDP": 229, "Multicore": 12000, "Socket": "LGA1200"},
 
         # Intel Core i5
         {"name": "Intel Core i5-14600K", "GEN": "Intel 14", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 181, "Multicore": 24000, "Socket": "LGA 1700"},
+         "TDP": 181, "Multicore": 24000, "Socket": "LGA1700"},
         {"name": "Intel Core i5-13600K", "GEN": "Intel 13", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 181, "Multicore": 22000, "Socket": "LGA 1700"},
+         "TDP": 181, "Multicore": 22000, "Socket": "LGA1700"},
         {"name": "Intel Core i5-12600K", "GEN": "Intel 12", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 150, "Multicore": 17000, "Socket": "LGA 1700"},
+         "TDP": 150, "Multicore": 17000, "Socket": "LGA1700"},
         {"name": "Intel Core i5-11600K", "GEN": "Intel 11", "RAM_GENs": ["DDR4"],
-         "TDP": 182, "Multicore": 11000, "Socket": "LGA 1200"},
+         "TDP": 182, "Multicore": 11000, "Socket": "LGA1200"},
         {"name": "Intel Core i5-10600K", "GEN": "Intel 10", "RAM_GENs": ["DDR4"],
-         "TDP": 182, "Multicore": 9500, "Socket": "LGA 1200"},
+         "TDP": 182, "Multicore": 9500, "Socket": "LGA1200"},
 
         # Intel Core i3
         {"name": "Intel Core i3-13100", "GEN": "Intel 13", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 60, "Multicore": 8000, "Socket": "LGA 1700"},
+         "TDP": 60, "Multicore": 8000, "Socket": "LGA1700"},
         {"name": "Intel Core i3-12100", "GEN": "Intel 12", "RAM_GENs": ["DDR4", "DDR5"],
-         "TDP": 60, "Multicore": 7500, "Socket": "LGA 1700"},
+         "TDP": 60, "Multicore": 7500, "Socket": "LGA1700"},
         {"name": "Intel Core i3-10100", "GEN": "Intel 10", "RAM_GENs": ["DDR4"],
-         "TDP": 65, "Multicore": 5500, "Socket": "LGA 1200"},
+         "TDP": 65, "Multicore": 5500, "Socket": "LGA1200"},
 
         # AMD Ryzen 9 (AM5 for Ryzen 7000, AM4 for Ryzen 3000/5000)
         {"name": "AMD Ryzen 9 7950X", "GEN": "AMD 5", "RAM_GENs": ["DDR5"], "TDP": 230,

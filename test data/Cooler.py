@@ -48,43 +48,43 @@ coolers_specs = [
         "name": "Corsair iCUE H100i RGB Elite 240mm",
         "type": "AIO Liquid",
         "tdp_capacity": 250,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "NZXT Kraken X53 RGB 240mm",
         "type": "AIO Liquid",
         "tdp_capacity": 240,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "Cooler Master MasterLiquid ML240L V2",
         "type": "AIO Liquid",
         "tdp_capacity": 200,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "DeepCool LS520 240mm",
         "type": "AIO Liquid",
         "tdp_capacity": 260,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "ARCTIC Liquid Freezer II 240mm",
         "type": "AIO Liquid",
         "tdp_capacity": 270,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "Thermaltake TH360 ARGB Sync 360mm",
         "type": "AIO Liquid",
         "tdp_capacity": 280,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "Lian Li Galahad II Trinity 240mm",
         "type": "AIO Liquid",
         "tdp_capacity": 275,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
 
     # Air Coolers
@@ -92,43 +92,43 @@ coolers_specs = [
         "name": "Cooler Master Hyper 212 Black Edition",
         "type": "Air",
         "tdp_capacity": 150,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "DeepCool GAMMAXX 400 V2",
         "type": "Air",
         "tdp_capacity": 130,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "be quiet! Pure Rock 2 Black",
         "type": "Air",
         "tdp_capacity": 150,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "Noctua NH-U12S Redux",
         "type": "Air",
         "tdp_capacity": 180,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "Thermalright Assassin X 120 SE",
         "type": "Air",
         "tdp_capacity": 160,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "ARCTIC Freezer 34 eSports DUO",
         "type": "Air",
         "tdp_capacity": 170,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     },
     {
         "name": "Vetroo V5 Black",
         "type": "Air",
         "tdp_capacity": 140,
-        "compatible_sockets": ["Intel LGA1700", "Intel LGA1200", "Intel LGA115x", "AMD AM5", "AMD AM4"]
+        "compatible_sockets": ["LGA1700", "LGA1200", "LGA115x", "AM5", "AM4"]
     }
 ]
 

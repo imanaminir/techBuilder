@@ -40,7 +40,7 @@ Powers=[
 
 
 for Power in Powers:
-    Product.objects.get_create(
+    Product.objects.get_or_create(
         name=Power["name"],
         part=Power_part,
         brand=Power["brand"],
