@@ -1,92 +1,120 @@
 from django.shortcuts import render
+from django.db.models import Prefetch, Q, IntegerField, Value
+from django.db.models.functions import Cast
 from pcBuilder.models import *
-from django.db.models import Prefetch , Q
+
 
 
 # Create your views here.
 
 
 def test(request):
+
+
+
     CPU = get_CPU()
-
-    CPU_gen = next(
-        (spec.value for spec in CPU.productspec_set.all() if spec.part_spec.name == "GEN"),
-        None
-    )
-    RAM_GENs = next((spec.value for spec in CPU.productspec_set.all() if spec.part_spec.name == "RAM_GENs"),
-        None
-    )
-    TDP=next(
-        (spec.value for spec in CPU.productspec_set.all() if spec.part_spec.name == "TDP"),
-        None
-    )
-    Socket = next(
-        (spec.value for spec in CPU.productspec_set.all() if spec.part_spec.name == "Socket"),
-        None
-    )
-
-    MB=get_MB(CPU_gen,RAM_GENs)
-
-    RAM_GEN_Supported=next(
-        (spec.value for spec in MB.productspec_set.all() if spec.part_spec.name == "RAM_GEN_Supported"),
-        None
-    )
-
-    PCIe_gen = next(
-        (spec.value for spec in MB.productspec_set.all() if spec.part_spec.name == "PCIe_GENs"),
-        None
-    )
-
-    GPU=get_GPU(PCIe_gen)
-    RAM=get_RAM(RAM_GEN_Supported)
-    Cooler=get_Cooler(TDP,Socket)
-    #to do , add the ability of making a build that doesn't need a dedicated GPU
+    # getting the specs in the new way using spec_dict
+    CPU_gen =CPU.spec_dict.get("GEN")
+    RAM_gens_suported_by_CPU =CPU.spec_dict.get("RAM_GENs")
+    TDP = CPU.spec_dict.get("TDP")
+    CPU_Socket=CPU.spec_dict.get("Socket")
 
 
-    return render(request,"Home.html",{'CPU':CPU,'MB':MB ,'GPU':GPU,'RAM':RAM,'Cooler':Cooler })
+    # getting the specs: a query for every spec
+    # CPU_gen = ProductSpec.objects.filter(product=CPU, part_spec=PartSpec.objects.get(name="GEN", part__name="CPU")).first()
+    # RAM_gens_suported_by_CPU=ProductSpec.objects.filter(product=CPU,part_spec=PartSpec.objects.get(name="RAM_GENs", part__name="CPU")).first()
+    #...
+
+    # getting the specs for using prefeatch-related
+    # CPU_gen = next(
+    #     (spec.value for spec in CPU.productspec_set.all() if spec.part_spec.name == "GEN"),
+    #     None
+    # )
+
+    # RAM_GENs = next((spec.value for spec in CPU.productspec_set.all() if spec.part_spec.name == "RAM_GENs"),
+    #     None
+    # )
+
+    # TDP=next(
+    #     (spec.value for spec in CPU.productspec_set.all() if spec.part_spec.name == "TDP"),
+    #     None
+    # )
+
+    # Socket = next(
+    #     (spec.value for spec in CPU.productspec_set.all() if spec.part_spec.name == "Socket"),
+    #     None
+    # )
+
+    MB=get_MB(CPU_gen,RAM_gens_suported_by_CPU)
+
+
+
+    # RAM_GEN_Supported=next(
+    #     (spec.value for spec in MB.productspec_set.all() if spec.part_spec.name == "RAM_GEN_Supported"),
+    #     None
+    # )
+
+    # PCIe_gen = next(
+    #     (spec.value for spec in MB.productspec_set.all() if spec.part_spec.name == "PCIe_GENs"),
+    #     None
+    # )
+
+    # GPU=get_GPU(PCIe_gen)
+    # RAM=get_RAM(RAM_GEN_Supported)
+    # Cooler=get_Cooler(TDP,Socket)
+    # #to do , add the ability of making a build that doesn't need a dedicated GPU
+
+
+    return render(request,"Home.html",{'CPU':CPU ,"RAM_gens_suported_by_CPU":RAM_gens_suported_by_CPU ,'MB':MB })
 
 
 
 
 def get_CPU():
-    #CPU = Product.objects.filter(part__name="CPU",productspec__part_spec__name="Multicore",price__lte=400).order_by("-productspec__value").first()
-    #a=ProductSpec.objects.filter(part_spec__name="Multicore",product__part__name="CPU").filter(product__price__lte=400).order_by("-value").first()
-    CPU = Product.objects.filter(
-        part__name="CPU",
-        productspec__part_spec__name="Multicore"
-    ).prefetch_related(
-        Prefetch('productspec_set', queryset=ProductSpec.objects.select_related('part_spec'))
-    ).order_by('-productspec__value').first()
-    return CPU
+    cpu_part = Part.objects.get(name="CPU")
+    multicore_spec = PartSpec.objects.get(name="Multicore", part=cpu_part)
 
-
+    CPU = (
+        ProductSpec.objects
+        .filter(part_spec=multicore_spec, product__part=cpu_part, product__price__lt=400)
+        .annotate(multicore_value=Cast('value', IntegerField()))
+        .order_by('-multicore_value')
+        .select_related('product').first()
+    )
+    return CPU.product
 
 
 def get_MB(CPU_gen, RAM_GENs):
-    MotherBoard = Product.objects.filter(
-        part__name="MotherBoard",
-    ).filter(
-        Q(productspec__part_spec__name="CPU_GENs_Supported", productspec__value__contains=CPU_gen),
+    # Step 1: Get the Part and PartSpecs
+    mb_part = Part.objects.get(name="MotherBoard")
+    cpu_gen_spec = PartSpec.objects.get(name="CPU_GENs_Supported", part=mb_part)
+    ram_gen_spec = PartSpec.objects.get(name="RAM_GEN_Supported", part=mb_part)
 
-    ).filter(
-        #the next line was the main way to do it but for some reason __in doesnt work properly in there. so I had to make a "for" loop to simulate the function of it.
-        #Q(productspec__part_spec__name="RAM_GEN_Supported", productspec__value__in=RAM_GENs),
+    # Step 2: Filter motherboards with matching CPU_GEN and RAM_GEN
+    # Find product IDs that support the given CPU gen
+    cpu_compatible_mb_ids = ProductSpec.objects.filter(
+        part_spec=cpu_gen_spec,
+        value__contains=CPU_gen
+    ).values_list("product_id", flat=True)
+    # Find product IDs that support any of the RAM gens
+    ram_mb_ids = ProductSpec.objects.filter(
+        part_spec=ram_gen_spec,
+        #value__in=["DDR4", "DDR5"]  # assuming value is a single string like "DDR5"
+    ).values_list("value","product_id")
+    ram_compatible_mb_ids=[]
+    for id in ram_mb_ids:
+        if id[0] in str(RAM_GENs):
+            ram_compatible_mb_ids.append(id[1])
 
-    ).prefetch_related(
-        Prefetch('productspec_set', queryset=ProductSpec.objects.select_related('part_spec'))
-    ).order_by('-price').distinct()
-    #this is the for loop I was talking about
-    for motherboard in MotherBoard:
-        motherboard_ram_gen=next(
-            (spec.value for spec in motherboard.productspec_set.all() if spec.part_spec.name == "RAM_GEN_Supported"),
-            None
-        )
-        if motherboard_ram_gen in RAM_GENs:
-            MotherBoard=motherboard
-            break
-        else:
-            MotherBoard=None
-    #MotherBoard=MotherBoard.first()
+    # Step 3: Intersect the IDs and get the most expensive motherboard
+    common_ids = set(cpu_compatible_mb_ids).intersection(ram_compatible_mb_ids)
+
+    MotherBoard = (
+        Product.objects
+        .filter(id__in=common_ids, part=mb_part, price__lt=400)
+        .order_by('-price')
+        .first()
+    )
     return MotherBoard
 
 

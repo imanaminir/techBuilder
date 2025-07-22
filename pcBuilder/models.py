@@ -22,9 +22,17 @@ class Product(models.Model):
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
     brand = models.CharField(max_length=255)  # یا اگر جدول Brand دارید بعداً ForeignKey کنید
     price = models.DecimalField(max_digits=12, decimal_places=0)
-
     def __str__(self):
         return self.name
+    @property
+    def spec_dict(self):
+        if not hasattr(self, '_spec_dict'):
+            self._spec_dict = {
+                spec.part_spec.name: spec.value
+                for spec in self.productspec_set.select_related('part_spec').all()
+            }
+        return self._spec_dict
+
 
 
 
