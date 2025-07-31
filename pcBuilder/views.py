@@ -14,11 +14,17 @@ from collections import Counter
 
 def test(request):
 
+    inputs={
+        "CPU_budget":600,
+        "MotherBoard_budget":300,
+        "GPU_budget":200,
+        "RAM_budget": 400,
+        "RAM_capacity": 64,
 
+    }
 
+    CPU = get_CPU(inputs["CPU_budget"])
 
-
-    CPU = get_CPU(400)
     # getting the specs in the new way using spec_dict
     CPU_gen =CPU.spec_dict.get("GEN")
     RAM_gens_suported_by_CPU =CPU.spec_dict.get("RAM_GENs")
@@ -51,7 +57,7 @@ def test(request):
     #     None
     # )
 
-    MB=get_MB(CPU_gen,RAM_gens_suported_by_CPU)
+    MB=get_MB(CPU_gen,RAM_gens_suported_by_CPU,inputs["MotherBoard_budget"])
 
     PCIe_gen=MB.spec_dict.get("PCIe_GENs")
     ram_slot=MB.spec_dict.get("RAM_GEN_Supported")
@@ -67,17 +73,20 @@ def test(request):
     #     None
     # )
 
-    GPU=get_GPU(PCIe_gen)
+    GPU=get_GPU(PCIe_gen,inputs["GPU_budget"])
 
     GPU_power_connector=GPU.spec_dict.get("power_connector")
     GPU_TDP=GPU.spec_dict.get("Power_Needed")
 
-    RAM=get_RAM(ram_slot,32,400)
+    RAM=get_RAM(ram_slot,inputs["RAM_capacity"],inputs["RAM_budget"])
     Cooler=get_Cooler(CPU_TDP,CPU_Socket)
+
+    print(CPU,MB,GPU,RAM,Cooler)
+
     # #to do , add the ability of making a build that doesn't need a dedicated GPU
     PSU=get_Power(GPU_power_connector,MB_Power_Connector,CPU_TDP,GPU_TDP)
 
-
+    print(CPU,MB,GPU,RAM,Cooler)
     return render(request,"Home.html",{'CPU':CPU ,"GPU":GPU ,'MB':MB, 'RAM':RAM[0], 'RAM_num':RAM[1] ,'Cooler':Cooler,'PSU':PSU})
 
 
@@ -102,135 +111,146 @@ def get_CPU(budget):
 
 
 
-def get_MB(CPU_gen, RAM_GENs):
-    # Step 1: Get the Part and PartSpecs
+def get_MB(CPU_gen, RAM_GENs, budget):
     mb_part = Part.objects.get(name="MotherBoard")
     cpu_gen_spec = PartSpec.objects.get(name="CPU_GENs_Supported", part=mb_part)
     ram_gen_spec = PartSpec.objects.get(name="RAM_GEN_Supported", part=mb_part)
 
-    # Step 2: Filter motherboards with matching CPU_GEN and RAM_GEN
-    # Find product IDs that support the given CPU gen
+    # Motherboards that support the CPU gen
     cpu_compatible_mb_ids = ProductSpec.objects.filter(
         part_spec=cpu_gen_spec,
         value__contains=CPU_gen
     ).values_list("product_id", flat=True)
-    # Find product IDs that support any of the RAM gens
-    ram_mb_ids = ProductSpec.objects.filter(
-        part_spec=ram_gen_spec,
-        #value__in=["DDR4", "DDR5"]  # assuming value is a single string like "DDR5"
-    ).values_list("value","product_id")
-    ram_compatible_mb_ids=[]
-    for id in ram_mb_ids:
-        if id[0] in str(RAM_GENs):
-            ram_compatible_mb_ids.append(id[1])
 
-    # Step 3: Intersect the IDs and get the most expensive motherboard
-    common_ids = set(cpu_compatible_mb_ids).intersection(ram_compatible_mb_ids)
+    # Motherboards that support any of the desired RAM gens
+    ram_mb_qs = ProductSpec.objects.filter(
+        part_spec=ram_gen_spec
+    ).values_list("value", "product_id")
 
-    MotherBoard = (
+    ram_compatible_mb_ids = [
+        product_id for value, product_id in ram_mb_qs if value in RAM_GENs
+    ]
+
+    # Intersection of both conditions
+    compatible_ids = set(cpu_compatible_mb_ids).intersection(ram_compatible_mb_ids)
+
+    motherboard = (
         Product.objects
-        .filter(id__in=common_ids, part=mb_part, price__lt=400)
+        .filter(id__in=compatible_ids, part=mb_part, price__lte=budget)
         .order_by('-price')
         .first()
     )
-    return MotherBoard
+
+    return motherboard
 
 
-def get_GPU(PCIe_gen):
-    PCIe_gen.sort()
-    PCIe_gen.reverse()
-    #GPU = Product.objects.filter(part__name="GPU").first()
-    PCIe_gen = PCIe_gen[0]
+
+def get_GPU(PCIe_gen, budget):
+    # Sort and prioritize highest generation
+    PCIe_gen.sort(reverse=True)
+    target_gen = PCIe_gen[0]
+
+    # Define backward-compatible supported generations
     supported_versions = {
         "PCIe 5.0": ["PCIe 5.0", "PCIe 4.0", "PCIe 3.0"],
         "PCIe 4.0": ["PCIe 4.0", "PCIe 3.0"],
-        "PCIe 3.0": ["PCIe 3.0"]
+        "PCIe 3.0": ["PCIe 3.0"],
     }
 
-    supported = supported_versions.get(PCIe_gen, [PCIe_gen])
-    GPU = Product.objects.filter(
+    supported = supported_versions.get(target_gen, [target_gen])
+
+    # Get GPU products under budget
+    gpu_qs = Product.objects.filter(
         part__name="GPU",
-        productspec__part_spec__name="PCIe_Gen",
-        #productspec__value__in=supported,
-        #price__lte=1300
+        price__lte=budget,
+        productspec__part_spec__name="PCIe_Gen"
     ).prefetch_related(
         Prefetch('productspec_set', queryset=ProductSpec.objects.select_related('part_spec'))
-    ).order_by('-price')
+    ).order_by('-price')  # Most expensive first
 
-    for gpu in GPU:
-        print(gpu.name)
-        gpu_pcie=next(
+    # Choose the first GPU with compatible PCIe Gen
+    for gpu in gpu_qs:
+        gpu_pcie = next(
             (spec.value for spec in gpu.productspec_set.all() if spec.part_spec.name == "PCIe_Gen"),
             None
         )
         if gpu_pcie in supported:
-            GPU=gpu
-            break
+            return gpu  # First compatible one (most expensive)
 
-        else:
-            GPU=None
-
-    return GPU
+    return None  # No compatible GPU found
 
 
 
 def get_RAM(RAM_GEN_Supported, needed_capacity, budget):
     ram_part = Part.objects.get(name="RAM")
 
-    # Relevant specs
+    # Get relevant PartSpecs
     gen_spec = PartSpec.objects.get(name="GEN", part=ram_part)
     speed_spec = PartSpec.objects.get(name="Speed", part=ram_part)
     capacity_spec = PartSpec.objects.get(name="Capacity", part=ram_part)
     modules_spec = PartSpec.objects.get(name="Modules_Num", part=ram_part)
 
-    # Get compatible RAMs
+    # Step 1: Get compatible RAMs by GEN
     compatible_ram_ids = ProductSpec.objects.filter(
         part_spec=gen_spec,
-        value=RAM_GEN_Supported
+        value__contains=RAM_GEN_Supported
     ).values_list("product_id", flat=True)
 
     ram_products = Product.objects.filter(
         id__in=compatible_ram_ids,
-        price__lte=budget // 2,  # each stick must be half or less
+        price__lte=budget,
         part=ram_part
     ).prefetch_related("productspec_set")
 
-    candidates = []
+    # Step 2: Try finding best 2-stick solution
+    candidates_exact_2 = []
+    candidates_exact_1 = []
+    candidates_over = []
 
     for ram in ram_products:
         specs = {s.part_spec.name: s.value for s in ram.productspec_set.all()}
-
         try:
-            capacity = int(specs.get("Capacity", 0))     # capacity per module
-            modules = int(specs.get("Modules_Num", 1))   # 1 or 2
+            capacity = int(specs.get("Capacity", 0))     # total capacity of the product
+            modules = int(specs.get("Modules_Num", 1))   # modules per product (1 or 2)
             speed = int(specs.get("Speed", 0))
-            total_capacity = capacity * modules
-
-            # Must use exactly 2 sticks of same product
-            combined_capacity = total_capacity * 2
-            combined_price = ram.price * 2
-
-            if (
-                modules in [1, 2] and
-                combined_capacity == needed_capacity and
-                combined_price <= budget
-            ):
-                candidates.append({
-                    "product": ram,
-                    "count": 2,
-                    "total_price": combined_price,
-                    "speed": speed,
-                })
         except:
-            continue  # skip invalid/missing data
+            continue
 
-    if not candidates:
-        return None
+        # Try 2-stick configuration
+        total_capacity_2 = capacity * 2
+        total_price_2 = ram.price * 2
+        if modules in [1, 2] and total_price_2 <= budget:
+            if total_capacity_2 == needed_capacity:
+                candidates_exact_2.append({
+                    "product": ram, "count": 2, "total_price": total_price_2, "speed": speed
+                })
+            elif total_capacity_2 > needed_capacity:
+                candidates_over.append({
+                    "product": ram, "count": 2, "total_price": total_price_2, "speed": speed
+                })
 
-    # Sort by highest speed, then lowest total price
-    candidates.sort(key=lambda x: (-x["speed"], x["total_price"]))
+        # Try 1-stick configuration (only if product has total capacity = needed)
+        total_capacity_1 = capacity
+        total_price_1 = ram.price
+        if total_price_1 <= budget:
+            if total_capacity_1 == needed_capacity:
+                candidates_exact_1.append({
+                    "product": ram, "count": 1, "total_price": total_price_1, "speed": speed
+                })
+            elif total_capacity_1 > needed_capacity:
+                candidates_over.append({
+                    "product": ram, "count": 1, "total_price": total_price_1, "speed": speed
+                })
 
-    return candidates[0]["product"], candidates[0]["count"]
+    # Sort by: speed desc, then total price asc
+    def sort_key(x): return (-x["speed"], x["total_price"])
+
+    for candidate_list in [candidates_exact_2, candidates_exact_1, candidates_over]:
+        if candidate_list:
+            candidate_list.sort(key=sort_key)
+            return candidate_list[0]["product"], candidate_list[0]["count"]
+
+    return None
 
 
 
@@ -296,61 +316,47 @@ def get_Power(GPU_connector,MB_connector,CPU_TDP,GPU_TDP):
     ).order_by("product__price").select_related('product')
 
     connectors_needed=GPU_connector+MB_connector
-    print(connectors_needed)
     PSU=[]
 
-    for psu_connectors in psu_connectors_productspecs:
-        print(psu_connectors.product.id)
-
-    print("     ")
     for connectors in psu_connectors_productspecs:
 
-        if is_compatible(connectors_needed,connectors.value):
-            print(connectors.product.id)
+        if can_power(connectors_needed,connectors.value):
             PSU.append(connectors.product)
-
-
-
 
     Power=PSU[0]
 
     return Power
 
 
-def is_compatible(required_connectors, psu_connectors):
-    required = Counter(required_connectors)
-    available = Counter(psu_connectors)
+def normalize_connector(connector):
+    """تبدیل کانکتورهای ترکیبی به شکل قابل استفاده"""
+    if connector in ['4+4-pin EPS', '8-pin EPS']:
+        return ['4-pin EPS', '4-pin EPS']
+    elif connector in ['6+2-pin PCIe', '8-pin PCIe']:
+        return ['6-pin PCIe', '2-pin PCIe']
+    elif connector in ['6-pin PCIe', '2-pin PCIe', '4-pin EPS', '24-pin ATX', 'SATA', 'Molex']:
+        return [connector]
+    else:
+        return []
 
-    # مرحله 0: تفسیر کانکتورهای ترکیبی
-    # 4+4 EPS می‌تونه به عنوان 8-pin EPS یا دو تا 4-pin EPS عمل کنه
-    if '4+4-pin EPS' in available:
-        available['8-pin EPS'] += available['4+4-pin EPS']
-        available['4-pin EPS'] += available['4+4-pin EPS']
-        del available['4+4-pin EPS']
+def can_power(required, available):
+    # ایجاد شمارش از کانکتورهای موجود روی پاور
+    available_expanded = []
+    for conn in available:
+        available_expanded.extend(normalize_connector(conn))
+    available_counter = Counter(available_expanded)
 
-    # 6+2 PCIe می‌تونه به عنوان 8-pin PCIe استفاده بشه
-    if '6+2-pin PCIe' in available:
-        available['8-pin PCIe'] += available['6+2-pin PCIe']
-        del available['6+2-pin PCIe']
+    # بررسی تک تک کانکتورهای موردنیاز
+    for req in required:
+        required_parts = normalize_connector(req)
 
-    # مرحله 1: تطبیق مستقیم (کانکتورهایی که دقیقاً با هم برابرند)
-    for connector in list(required):
-        match = min(required[connector], available.get(connector, 0))
-        required[connector] -= match
-        available[connector] -= match
+        for part in required_parts:
+            if available_counter[part] > 0:
+                available_counter[part] -= 1
+            else:
+                return False  # اگر یک بخش از کانکتور قابل تأمین نباشد، false برمی‌گردد
 
-    # مرحله 2: استفاده از 8-pin EPS برای تأمین 4-pin EPS (در صورت نیاز)
-    if required['4-pin EPS'] > 0 and available['8-pin EPS'] > 0:
-        match = min(required['4-pin EPS'], available['8-pin EPS'])
-        required['4-pin EPS'] -= match
-        available['8-pin EPS'] -= match
+    return True
 
-    # مرحله 3: استفاده از 8-pin PCIe برای GPU (در صورت نیاز)
-    if required['8-pin PCIe'] > 0 and available['8-pin PCIe'] > 0:
-        match = min(required['8-pin PCIe'], available['8-pin PCIe'])
-        required['8-pin PCIe'] -= match
-        available['8-pin PCIe'] -= match
 
-    # اگر چیزی در required باقی مونده، یعنی ناسازگاری داریم
-    return all(count == 0 for count in required.values())
 
