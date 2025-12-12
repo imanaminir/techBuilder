@@ -1,79 +1,103 @@
 from itertools import product
 
-from django.shortcuts import render
+from django.shortcuts import render ,redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from django.db.models import Prefetch, Q, IntegerField, Value
 from django.db.models.functions import Cast
 from pcBuilder.models import *
 from collections import Counter
-
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 
 
 
 # Create your views here.
 
+@login_required
+def dashboard_view(request):
+    user = request.user
+    builds = Build.objects.filter(user=user).order_by("-created_at")
 
-def test(request):
-
-    inputs={
-        "CPU_budget":600,
-        "MotherBoard_budget":300,
-        "GPU_budget":200,
-        "RAM_budget": 300,
-        "RAM_capacity": 32,
-
-    }
-
-    CPU = get_CPU(inputs["CPU_budget"])
-
-    # getting the specs in the new way using spec_dict
-    CPU_gen =CPU.spec_dict.get("GEN")
-    RAM_gens_suported_by_CPU =CPU.spec_dict.get("RAM_GENs")
-    CPU_TDP = CPU.spec_dict.get("TDP")
-    CPU_Socket=CPU.spec_dict.get("Socket")
-    CPU_price=CPU.price
-
-
-
-    MB=get_MB(CPU_gen,RAM_gens_suported_by_CPU,inputs["MotherBoard_budget"])
-
-    PCIe_gen=MB.spec_dict.get("PCIe_GENs")
-    ram_slot=MB.spec_dict.get("RAM_GEN_Supported")
-    MB_Power_Connector=MB.spec_dict.get("Power_Connector")
-    MB_price=MB.price
-
-
-
-    #to do , add the ability of making a build that doesn't need a dedicated GPU
-    GPU=get_GPU(PCIe_gen,inputs["GPU_budget"])
-
-    GPU_power_connector=GPU.spec_dict.get("power_connector")
-    GPU_TDP=GPU.spec_dict.get("Power_Needed")
-    GPU_price=GPU.price
-
-
-
-    RAM=get_RAM(ram_slot,inputs["RAM_capacity"],inputs["RAM_budget"])
-    RAM_price=RAM[0].price*RAM[1]
-
-
-
-    Cooler=get_Cooler(CPU_TDP,CPU_Socket)
-    Cooler_price=Cooler.price
-
-
-
-    PSU=get_Power(GPU_power_connector,MB_Power_Connector,CPU_TDP,GPU_TDP)
-    PSU_price=PSU.price
-
-    return render(request,"Home.html",{
-        'CPU':CPU,'CPU_price':CPU_price ,
-        "GPU":GPU ,'GPU_price':GPU_price,
-        'MB':MB,'MB_price':MB_price,
-        'RAM':RAM[0], 'RAM_num':RAM[1] ,'RAM_price':RAM_price,
-        'Cooler':Cooler,'Cooler_price':Cooler_price,
-        'PSU':PSU,'PSU_price':PSU_price,
+    return render(request, "dashboard.html", {
+        "user": user,
+        "builds": builds
     })
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # لاگین خودکار بعد از ثبت‌نام
+            return redirect('home')  # یا هر صفحه‌ای که خواستی
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
+
+
+@login_required
+@csrf_exempt
+def build_pc(request):
+    result = None
+
+    if request.method == "POST":
+        inputs = {
+            "CPU_budget": int(request.POST.get("CPU_budget", 0)),
+            "MotherBoard_budget": int(request.POST.get("MotherBoard_budget", 0)),
+            "GPU_budget": int(request.POST.get("GPU_budget", 0)),
+            "RAM_budget": int(request.POST.get("RAM_budget", 0)),
+            "RAM_capacity": int(request.POST.get("RAM_capacity", 0)),
+        }
+
+        CPU = get_CPU(inputs["CPU_budget"])
+        CPU_gen = CPU.spec_dict.get("GEN")
+        RAM_gens_supported_by_CPU = CPU.spec_dict.get("RAM_GENs")
+        CPU_TDP = CPU.spec_dict.get("TDP")
+        CPU_Socket = CPU.spec_dict.get("Socket")
+
+        MB = get_MB(CPU_gen, RAM_gens_supported_by_CPU, inputs["MotherBoard_budget"])
+        PCIe_gen = MB.spec_dict.get("PCIe_GENs")
+        ram_slot = MB.spec_dict.get("RAM_GEN_Supported")
+        MB_Power_Connector = MB.spec_dict.get("Power_Connector")
+
+        GPU = get_GPU(PCIe_gen, inputs["GPU_budget"])
+        GPU_power_connector = GPU.spec_dict.get("power_connector")
+        GPU_TDP = GPU.spec_dict.get("Power_Needed")
+
+        RAM = get_RAM(ram_slot, inputs["RAM_capacity"], inputs["RAM_budget"])
+
+        Cooler = get_Cooler(CPU_TDP, CPU_Socket)
+        PSU = get_Power(GPU_power_connector, MB_Power_Connector, CPU_TDP, GPU_TDP)
+
+        result = {
+            'CPU': CPU, 'CPU_price': CPU.price,
+            'MB': MB, 'MB_price': MB.price,
+            'GPU': GPU, 'GPU_price': GPU.price,
+            'RAM': RAM[0], 'RAM_num': RAM[1], 'RAM_price': RAM[0].price * RAM[1],
+            'Cooler': Cooler, 'Cooler_price': Cooler.price,
+            'PSU': PSU, 'PSU_price': PSU.price,
+        }
+
+        # ذخیره در مدل Build
+        if request.user.is_authenticated:
+            Build.objects.create(
+                user=request.user,
+                description="",
+                input=inputs,
+                part_percentage={},  # فعلاً خالی
+                budget=sum(inputs.values()),
+                cpu=CPU,
+                motherboard=MB,
+                ram=RAM[0],
+                gpu=GPU,
+                cpu_cooler=Cooler,
+                power=PSU,
+                monitor=None  # اگر هنوز مانیتور انتخاب نمی‌کنی
+            )
+
+    return render(request, "build.html", {"result": result})
 
 
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>داشبورد کاربر</title>
+</head>
+<body>
+    <h2>سلام {{ user.username }} 👋</h2>
+    <p>ایمیل: {{ user.email }}</p>
+
+    <hr>
+    <h3>بیلدهای شما:</h3>
+
+    {% if builds %}
+        <ul>
+            {% for build in builds %}
+                <li>
+                    <strong>بیلد شماره {{ build.id }}</strong><br>
+                    CPU: {{ build.cpu }} - GPU: {{ build.gpu }} - RAM: {{ build.ram }}<br>
+                    <small>بودجه: {{ build.budget }} تومان</small><br>
+                    <small>تاریخ ساخت: {{ build.created_at|date:"Y/m/d H:i" }}</small>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>شما هنوز هیچ بیلدی نساخته‌اید.</p>
+    {% endif %}
+
+    <a href="{% url 'build' %}">
+        <button>ساخت بیلد جدید ➕</button>
+    </a>
+</body>
+</html>

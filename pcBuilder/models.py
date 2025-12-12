@@ -52,21 +52,26 @@ class CompatibilityCheck(models.Model):
     def __str__(self):
         return f"{self.partSpec_1.part.name} ({self.partSpec_1.spec.name}) vs {self.partSpec_2.part.name} ({self.partSpec_2.spec.name})"
 
+
 class Build(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    description = models.TextField()
-    input= models.JSONField()
-    partPercentage = models.JSONField()
+    description = models.TextField(blank=True)
+    input = models.JSONField()
+    part_percentage = models.JSONField()
     budget = models.DecimalField(max_digits=12, decimal_places=0)
     star = models.BooleanField(default=False)
-    Cpu= models.ForeignKey(Product, on_delete=models.PROTECT, related_name='cpu')
-    MotherBoard= models.ForeignKey(Product, on_delete=models.PROTECT, related_name='motherboard')
-    Ram= models.ForeignKey(Product, on_delete=models.PROTECT, related_name='ram')
-    Gpu= models.ForeignKey(Product, on_delete=models.PROTECT, related_name='gpu')
-    CpuCooler= models.ForeignKey(Product, on_delete=models.PROTECT, related_name='cpuCooler')
-    Monitor= models.ForeignKey(Product, on_delete=models.PROTECT, related_name='monitor')
-    Power= models.ForeignKey(Product, on_delete=models.PROTECT, related_name='power')
+
+    cpu = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='build_cpu', null=True, blank=True)
+    motherboard = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='build_motherboard', null=True, blank=True)
+    ram = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='build_ram', null=True, blank=True)
+    gpu = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='build_gpu', null=True, blank=True)
+    cpu_cooler = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='build_cpu_cooler', null=True, blank=True)
+    monitor = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='build_monitor', null=True, blank=True)
+    power = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='build_power', null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user} - {self.id}"
+        return f"{self.user.username} - Build #{self.id}"
+
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>ساختن سیستم</title>
+</head>
+<body>
+    <h2>ساختن سیستم شخصی</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <label>بودجه CPU:</label>
+        <input type="number" name="CPU_budget" required><br>
+
+        <label>بودجه MotherBoard:</label>
+        <input type="number" name="MotherBoard_budget" required><br>
+
+        <label>بودجه GPU:</label>
+        <input type="number" name="GPU_budget" required><br>
+
+        <label>بودجه RAM:</label>
+        <input type="number" name="RAM_budget" required><br>
+
+        <label>ظرفیت RAM موردنیاز (GB):</label>
+        <input type="number" name="RAM_capacity" required><br>
+
+        <button type="submit">ساختن PC</button>
+    </form>
+
+    <hr>
+
+    {% if result %}
+        {% if result.error %}
+            <p style="color: red;">{{ result.error }}</p>
+        {% else %}
+            <h3>نتیجه:</h3>
+            <p><strong>CPU:</strong> {{ result.CPU }} - ${{ result.CPU_price }}</p>
+            <p><strong>MotherBoard:</strong> {{ result.MB }} - ${{ result.MB_price }}</p>
+            <p><strong>GPU:</strong> {{ result.GPU }} - ${{ result.GPU_price }}</p>
+            <p><strong>RAM:</strong> {{ result.RAM }} × {{ result.RAM_num }} - ${{ result.RAM_price }}</p>
+            <p><strong>Cooler:</strong> {{ result.Cooler }} - ${{ result.Cooler_price }}</p>
+            <p><strong>Power Supply:</strong> {{ result.PSU }} - ${{ result.PSU_price }}</p>
+        {% endif %}
+    {% endif %}
+</body>
+
+
+</html>
+{% if user.is_authenticated %}
+  سلام {{ user.username }} |
+  <a href="{% url 'logout' %}">خروج</a>
+{% else %}
+  <a href="{% url 'login' %}">ورود</a> |
+  <a href="{% url 'register' %}">ثبت‌نام</a>
+{% endif %}
+<p> </p>
+<a href="{% url 'dashboard' %}">پنل کاربری</a>
