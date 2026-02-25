@@ -83,11 +83,12 @@ WSGI_APPLICATION = 'techBuilder.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pcbuilder',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'techbuilder',
         'host': 'localhost',
-        'USER': 'root',
+        'USER': 'postgres',
         'PASSWORD': 'AhmadImanAmin4294',
+        'PORT': '5432',
     }
 }
 
